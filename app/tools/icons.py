@@ -41,4 +41,5 @@ for root, dirs, files in os.walk(RES):
         im.convert('RGB').save(p)
 with open(os.path.join(RES, 'values', 'ic_launcher_background.xml'), 'w') as f:
     f.write('<?xml version="1.0" encoding="utf-8"?>\n<resources>\n    <color name="ic_launcher_background">#0B6B57</color>\n</resources>\n')
+icon(256).save(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'artwork.png'), optimize=True)
 print('ok')

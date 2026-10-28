@@ -5,7 +5,7 @@ App de Android para escuchar leyes con voz natural grabada, completas o por tema
 ## Instalar la app
 
 1. En el celular Android, abre este enlace y descarga el archivo:
-   https://github.com/Artycert/LEY-EN-VOZ/raw/main/apk/LeyEnVoz-0.1.0.apk
+   https://github.com/Artycert/LEY-EN-VOZ/raw/main/apk/LeyEnVoz-0.1.1.apk
 2. Ábrelo desde las descargas. Android pedirá permitir instalar apps de este origen (del navegador o del administrador de archivos): acéptalo una vez.
 3. Abre **Ley en Voz**. La primera vez necesita internet para bajar la lista de leyes.
 

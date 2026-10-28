@@ -149,7 +149,8 @@ svg { flex: none; }
 .docmeta { margin: 8px 0 0; color: var(--muted); font-size: 13px; display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; font-variant-numeric: tabular-nums; }
 .chip { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); background: var(--accent-soft); border-radius: 999px; padding: 2px 8px; }
 
-.u { display: grid; grid-template-columns: 2.75rem minmax(0, 1fr); column-gap: .5rem; padding: 4px 0; scroll-margin: 24px; }
+.u { display: grid; grid-template-columns: 2.75rem minmax(0, 1fr); column-gap: .5rem; padding: 4px 0; scroll-margin: 24px; content-visibility: auto; contain-intrinsic-size: auto 160px; }
+.u.cur { content-visibility: visible; }
 .gut { display: flex; flex-direction: column; align-items: center; gap: 3px; padding-top: 3px; }
 .pbtn {
   width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--line); background: var(--surface);
@@ -295,6 +296,8 @@ svg { flex: none; }
 @keyframes dots { 0% { content: ""; } 25% { content: "."; } 50% { content: ".."; } 75% { content: "..."; } }
 .expl-n { margin: 0; font-size: 12px; color: var(--muted); }
 .expl-n.err { color: var(--danger); font-size: 13px; }
+.expl.fixed { content-visibility: auto; contain-intrinsic-size: auto 420px; }
+.expl.fixed.live { content-visibility: visible; }
 .expl.fixed .expl-t { white-space: normal; }
 .expl.fixed .expl-t p { margin: 0 0 .7em; }
 .expl.fixed .expl-t p:last-child { margin-bottom: 0; }
@@ -504,6 +507,7 @@ svg { flex: none; }
   const REMOTE = /*@@REMOTE@@*/;
   const APP = !!REMOTE;
   const APP_VERSION = /*@@APPVER@@*/;
+  const ARTWORK = /*@@ARTWORK@@*/;
   const CPS = 15; // caracteres por segundo a velocidad 1×
   const PDFJS = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
   const PDFW = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
@@ -810,8 +814,9 @@ svg { flex: none; }
       const row = document.querySelector(`#ix .ixa[data-i="${i}"]`); if (row) row.classList.add('cur');
     }
   }
+  let onEl = null;
   function highlight() {
-    document.querySelectorAll('#doc .on').forEach(e => e.classList.remove('on'));
+    if (onEl) { onEl.classList.remove('on'); onEl = null; }
     const i = S.cur.u; if (i < 0) return;
     markActive(i);
     const el = document.getElementById('u' + i); if (!el) return;
@@ -821,7 +826,7 @@ svg { flex: none; }
       if (seg.p === -1) t = el.querySelector('.al, .hnt') || el.querySelector('.hk');
       else t = el.querySelector(`[data-p="${seg.p}"] [data-s="${seg.s}"]`);
     }
-    if (t) t.classList.add('on');
+    if (t) { t.classList.add('on'); onEl = t; }
     if (S.follow) (t || el).scrollIntoView({ block: 'center', behavior: reduced() ? 'auto' : 'smooth' });
   }
   function scrollToUnit(i, block = 'start') {
@@ -980,7 +985,7 @@ svg { flex: none; }
     try { AUD.pause(); } catch (e) {}
     clearExpl(); A.lastU = -1;
     wake(false);
-    document.querySelectorAll('#doc .on').forEach(e => e.classList.remove('on'));
+    if (onEl) { onEl.classList.remove('on'); onEl = null; }
     markActive(-1);
     S.cur = { u: -1, seg: 0 }; store.del('pos:' + S.law.id);
     updatePlayUI(); updateNow(true);
@@ -1264,7 +1269,7 @@ svg { flex: none; }
   function aStartExpl(r) {
     A.mode = 'expl'; A.k = r.k; A.lastU = -1;
     setSrc(`e${pad2(r.k)}.mp3`, 0, aStart);
-    document.querySelectorAll('#doc .on').forEach(e => e.classList.remove('on'));
+    if (onEl) { onEl.classList.remove('on'); onEl = null; }
     markExpl(r.k, true); updateNow(); setMeta();
   }
   function audioFailed() {
@@ -1330,8 +1335,21 @@ svg { flex: none; }
   const NMS = (APP && window.capacitorMediaSession && window.capacitorExports && window.capacitorExports.Capacitor.isNativePlatform()) ? window.capacitorMediaSession.MediaSession : null;
   const MS = {
     ok: !!NMS || ('mediaSession' in navigator),
-    meta(m) { try { if (NMS) NMS.setMetadata(m).catch(() => {}); else navigator.mediaSession.metadata = new MediaMetadata(m); } catch (e) {} },
-    state(st) { try { if (NMS) NMS.setPlaybackState({ playbackState: st }).catch(() => {}); else navigator.mediaSession.playbackState = st === 'none' ? 'none' : st; } catch (e) {} },
+    started: false, last: '',
+    meta(m) {
+      // el plugin de Android necesita siempre la lista de portadas (sin ella se cerraba la app)
+      m.artwork = ARTWORK ? [{ src: ARTWORK, sizes: '256x256', type: 'image/png' }] : [];
+      try { if (NMS) NMS.setMetadata(m).catch(() => {}); else navigator.mediaSession.metadata = new MediaMetadata(m); } catch (e) {}
+    },
+    state(st) {
+      // la notificación solo aparece después de reproducir algo
+      if (st !== 'playing' && !MS.started) return;
+      if (st === MS.last) return;
+      MS.last = st;
+      if (st === 'playing') MS.started = true;
+      if (st === 'none') MS.started = false;
+      try { if (NMS) NMS.setPlaybackState({ playbackState: st }).catch(() => {}); else navigator.mediaSession.playbackState = st; } catch (e) {}
+    },
     handler(a, f) { try { if (NMS) NMS.setActionHandler({ action: a }, f).catch(() => {}); else navigator.mediaSession.setActionHandler(a, f); } catch (e) {} }
   };
   function setMeta() {

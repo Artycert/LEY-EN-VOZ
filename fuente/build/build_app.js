@@ -55,7 +55,7 @@ const pack = {
 const js = s => JSON.stringify(s).replace(/</g, '\\u003c').replace(/\u2028/g, '\\u2028').replace(/\u2029/g, '\\u2029');
 const tpl = fs.readFileSync(path.join(R, 'app.html'), 'utf8');
 const core = fs.readFileSync(path.join(R, 'core.js'), 'utf8');
-function render({ instr, packs, remote, appver, appjs }) {
+function render({ instr, packs, remote, appver, appjs, artwork }) {
   let html = tpl;
   const put = (tag, val) => { if (!html.includes(tag)) throw new Error('Falta ' + tag); html = html.split(tag).join(val); };
   put('/*@@CORE@@*/', core);
@@ -64,12 +64,15 @@ function render({ instr, packs, remote, appver, appjs }) {
   put('/*@@REMOTE@@*/', js(remote));
   put('/*@@APPVER@@*/', js(appver));
   put('<!--@@APPJS@@-->', appjs);
+  put('/*@@ARTWORK@@*/', js(artwork || ''));
   if (html.includes('\uFFFD')) throw new Error('U+FFFD en la salida');
   return html;
 }
 
 // 1) Página web (artefacto): ley incluida, audio junto a la página
-const web = render({ instr: fs.readFileSync(path.join(R, 'instructivo.txt'), 'utf8'), packs: [pack], remote: null, appver: '', appjs: '' });
+const ARTWORK_PNG = path.join(process.env.REPO || '/home/claude/ley-en-voz', 'app/tools/artwork.png');
+const artwork = fs.existsSync(ARTWORK_PNG) ? 'data:image/png;base64,' + fs.readFileSync(ARTWORK_PNG).toString('base64') : '';
+const web = render({ artwork, instr: fs.readFileSync(path.join(R, 'instructivo.txt'), 'utf8'), packs: [pack], remote: null, appver: '', appjs: '' });
 fs.writeFileSync(path.join(R, 'leyes-en-voz.html'), web);
 console.log('web ok', (web.length / 1024).toFixed(0) + ' KB', 'pistas', packTracks.length, 'temas', packRanges.length);
 
@@ -82,11 +85,15 @@ if (fs.existsSync(REPO) && !partial) {
   fs.mkdirSync(www, { recursive: true });
   fs.copyFileSync(path.join(REPO, 'app/node_modules/@capacitor/core/dist/capacitor.js'), path.join(www, 'capacitor.js'));
   fs.copyFileSync(path.join(REPO, 'app/node_modules/@jofr/capacitor-media-session/dist/plugin.js'), path.join(www, 'media-session.js'));
-  const appHtml = render({
+  const appHtml0 = render({ artwork,
     instr: fs.readFileSync(path.join(R, 'instructivo_app.txt'), 'utf8'), packs: [],
     remote: { base, catalog: 'catalog.json' }, appver: APPVER,
     appjs: '<script src="capacitor.js"></script>\n<script src="media-session.js"></script>\n'
   });
+  // en la app las fuentes van incluidas (funciona sin internet y abre más rápido)
+  require('child_process').execFileSync('python3', [path.join(REPO, 'app/tools/fonts.py'), path.join(R, 'app.html'), www], { stdio: 'inherit' });
+  const appHtml = appHtml0.replace(/<link rel="preconnect"[^>]*>\n/g, '').replace(/<link rel="stylesheet" href="https:\/\/fonts\.googleapis\.com[^>]*>/, '<link rel="stylesheet" href="fonts/fonts.css">');
+  if (appHtml.includes('fonts.googleapis')) throw new Error('quedó la liga a Google Fonts');
   const head = '<!doctype html>\n<html lang="es">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n<meta name="theme-color" content="#0B6B57">\n';
   fs.writeFileSync(path.join(www, 'index.html'), head + appHtml.replace('<title>', '</head>\n<body>\n<title>') + '\n</body>\n</html>\n');
   // paquete de la ley

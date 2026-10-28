@@ -1,9 +1,11 @@
 {
   "name": "ley-en-voz",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "description": "Reproductor de leyes en audio",
-  "scripts": {},
+  "scripts": {
+    "postinstall": "node tools/patch-plugin.js"
+  },
   "dependencies": {
     "@capacitor/android": "^6.2.2",
     "@capacitor/cli": "^6.2.2",
