@@ -45,7 +45,7 @@ if (missing.length || missE.length) console.warn('PARCIAL: faltan pistas', missi
 const pack = {
   id: 'lipe-campeche',
   name: 'Ley de Instituciones y Procedimientos Electorales del Estado de Campeche',
-  meta: `${law.articles} artículos · voz grabada y ${packRanges.length} temas con explicación`,
+  meta: `${law.articles} artículos en ${packRanges.length} temas, con voz grabada`,
   source: 'Texto del Compendio Jurídico del Congreso del Estado de Campeche (documento para consulta, sin validez legal). Última reforma: Decreto 70, P.O. 28 de marzo de 2025.',
   note: 'Al final de cada tema hay una explicación preparada con Claude a partir del texto de la ley. Es una guía de estudio: no sustituye la lectura de los artículos.',
   explTotal: Math.round(explTotal),
@@ -112,7 +112,7 @@ if (fs.existsSync(REPO) && !partial) {
     app: { version: APPVER, url: `https://github.com/Artycert/LEY-EN-VOZ/raw/main/apk/LeyEnVoz-${APPVER}.apk` },
     leyes: [{
       id: pack.id, name: pack.name, v: 1,
-      meta: `${law.articles} artículos · ${packRanges.length} temas con explicación · ${Math.round(hours)} h de audio`,
+      meta: `${law.articles} artículos en ${packRanges.length} temas, ${Math.round(hours)} horas de audio`,
       pack: `packs/${pack.id}/pack.json`, audio: `packs/${pack.id}/audio/`,
       files, mb: Math.round(bytes / 1048576)
     }]

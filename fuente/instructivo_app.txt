@@ -12,7 +12,7 @@ Artículo 2o.- Las leyes disponibles se eligen con el botón que muestra el nomb
 
 Artículo 3o.- Para escuchar una ley sin internet, en la lista de leyes se oprime «Descargar para escuchar sin internet». Si la descarga se interrumpe, se continúa donde se quedó. Sin descargar, el audio se escucha por internet y gasta alrededor de 15 MB por hora.
 
-Artículo 4o.- En el índice se marcan los títulos, capítulos o artículos que se quieren escuchar. El selector «O escucha un tema completo» marca un tema de una vez e indica cuántos minutos dura.
+Artículo 4o.- La pestaña «Temas» del panel lista los temas de la ley con su duración. Al tocar uno se marcan sus artículos de una vez, y los temas escuchados completos quedan señalados con una palomita. En la pestaña «Índice» se pueden marcar títulos, capítulos o artículos sueltos.
 
 Artículo 5o.- La lectura sigue con la pantalla apagada y se controla desde la notificación, la pantalla de bloqueo o los audífonos.
 

@@ -1,14 +1,14 @@
 {
   "app": {
-    "version": "0.1.1",
-    "url": "https://github.com/Artycert/LEY-EN-VOZ/raw/main/apk/LeyEnVoz-0.1.1.apk"
+    "version": "0.2.0",
+    "url": "https://github.com/Artycert/LEY-EN-VOZ/raw/main/apk/LeyEnVoz-0.2.0.apk"
   },
   "leyes": [
     {
       "id": "lipe-campeche",
       "name": "Ley de Instituciones y Procedimientos Electorales del Estado de Campeche",
       "v": 1,
-      "meta": "833 artículos · 72 temas con explicación · 12 h de audio",
+      "meta": "833 artículos en 72 temas, 12 horas de audio",
       "pack": "packs/lipe-campeche/pack.json",
       "audio": "packs/lipe-campeche/audio/",
       "files": 145,

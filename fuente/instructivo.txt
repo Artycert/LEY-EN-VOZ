@@ -58,7 +58,7 @@ Artículo 13.- En las leyes que carga cada quien, al terminar de escuchar lo mar
 
 Artículo 14.- Las leyes integradas, como la Ley de Instituciones y Procedimientos Electorales del Estado de Campeche, traen la lectura grabada con voz natural y una explicación preparada para cada tema. La explicación se escucha al terminar el último artículo marcado de cada tema, aparece escrita en la hoja de lectura y puede escucharse sola con su botón. Escucharlas no usa la cuenta de Claude de nadie. Las explicaciones se prepararon con Claude a partir del texto de la ley; son una guía de estudio y no sustituyen la lectura de los artículos.
 
-Artículo 15.- En las leyes integradas, el selector «O escucha un tema completo» marca de una vez los artículos de un tema. La opción «Voz natural grabada» puede desactivarse en los ajustes para usar la voz del equipo.
+Artículo 15.- En las leyes integradas, la pestaña «Temas» del panel lista los temas con su duración; al tocar uno se marcan sus artículos de una vez. Los temas escuchados completos quedan señalados con una palomita. La opción «Voz natural grabada» puede desactivarse en los ajustes para usar la voz del equipo.
 
 TRANSITORIOS
 
