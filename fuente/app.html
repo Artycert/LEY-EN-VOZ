@@ -1,0 +1,2172 @@
+<title>Leyes en Voz Alta</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+<style>
+/* Layout: app de una pantalla — índice de la ley a la izquierda, hoja de lectura al centro, reproductor fijo abajo */
+:root {
+  --bg: #ECF0ED;
+  --surface: #FAFCFB;
+  --ink: #17201C;
+  --muted: #59675F;
+  --line: #D2DAD5;
+  --accent: #0B6B57;
+  --accent-ink: #FFFFFF;
+  --accent-soft: #DCEDE6;
+  --mark: #FFE27A;
+  --mark-ink: #17201C;
+  --danger: #A3321F;
+  --scrim: rgba(12, 22, 18, .48);
+  --f-ui: "Public Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --f-text: "Source Serif 4", "Source Serif Pro", Georgia, "Times New Roman", serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0D1311; --surface: #141C19; --ink: #E3EAE6; --muted: #8FA099; --line: #27332E;
+    --accent: #45BF9B; --accent-ink: #04211A; --accent-soft: #173A30; --mark: #5E4C0E; --mark-ink: #FFF3C4;
+    --danger: #F08A73; --scrim: rgba(0, 0, 0, .6); color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0D1311; --surface: #141C19; --ink: #E3EAE6; --muted: #8FA099; --line: #27332E;
+  --accent: #45BF9B; --accent-ink: #04211A; --accent-soft: #173A30; --mark: #5E4C0E; --mark-ink: #FFF3C4;
+  --danger: #F08A73; --scrim: rgba(0, 0, 0, .6); color-scheme: dark;
+}
+html { height: 100%; box-sizing: border-box; }
+*, *::before, *::after { box-sizing: inherit; }
+body {
+  height: 100%; margin: 0; display: flex; flex-direction: column; overflow: hidden;
+  background: var(--bg); color: var(--ink); font: 15px/1.45 var(--f-ui);
+}
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+.vh { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+svg { flex: none; }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 6px; font-weight: 600; font-size: 13.5px;
+  border: 1px solid var(--line); background: var(--surface); color: var(--ink);
+  border-radius: 8px; padding: 7px 12px; line-height: 1.2; white-space: nowrap;
+}
+.btn:hover { border-color: var(--muted); }
+.btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.btn.primary:hover { filter: brightness(1.06); }
+.btn.ghost { border-color: transparent; background: transparent; }
+.btn.danger { color: var(--danger); }
+.btn:disabled { opacity: .5; cursor: default; }
+.iconbtn {
+  width: 38px; height: 38px; display: inline-grid; place-items: center; border-radius: 8px;
+  border: 1px solid transparent; background: transparent; color: var(--ink);
+}
+.iconbtn:hover { background: var(--accent-soft); }
+
+/* Barra superior */
+.top { background: var(--surface); border-bottom: 1px solid var(--line); flex: none; }
+.top-in {
+  display: flex; align-items: center; gap: 10px; padding-block: 8px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.brand { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 15px; letter-spacing: -.01em; white-space: nowrap; }
+.brand svg { color: var(--accent); }
+.lawpick {
+  margin-left: 8px; min-width: 0; flex: 0 1 auto; display: flex; align-items: center; gap: 8px;
+  border: 1px solid var(--line); background: var(--bg); border-radius: 8px; padding: 6px 10px; text-align: left;
+}
+.lawpick:hover { border-color: var(--muted); }
+.lawpick .k { font-size: 10.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.lawpick .n { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.top .spacer { flex: 1; }
+.only-narrow { display: none !important; }
+
+/* Cuerpo */
+.main { flex: 1; min-height: 0; display: grid; grid-template-columns: 330px minmax(0, 1fr); position: relative; }
+.side {
+  background: var(--surface); border-right: 1px solid var(--line); overflow: auto; min-height: 0;
+  padding-block: 16px 24px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: 16px;
+  display: flex; flex-direction: column; gap: 18px;
+}
+.eyebrow { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin: 0; }
+.selbox { display: flex; flex-direction: column; gap: 10px; }
+.row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.range { display: flex; flex-wrap: wrap; align-items: end; gap: 8px; }
+.range label { display: flex; flex-direction: column; gap: 3px; font-size: 12px; color: var(--muted); font-weight: 600; }
+.range input {
+  width: 74px; padding: 7px 8px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg);
+  font-variant-numeric: tabular-nums;
+}
+.sum { margin: 0; font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.sum b { color: var(--ink); }
+.search input {
+  width: 100%; padding: 9px 11px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg);
+}
+
+/* Índice */
+.ix { font-size: 13.5px; display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+.ixh, .ixa { display: grid; align-items: center; gap: 4px; min-width: 0; border-radius: 6px; }
+.ixh { grid-template-columns: 22px 20px minmax(0, 1fr) auto; padding: 3px 2px; }
+.ixa { grid-template-columns: 20px minmax(0, 1fr); padding: 2px 2px; }
+.ix input[type=checkbox] { width: 15px; height: 15px; margin: 0; accent-color: var(--accent); }
+.tog { width: 22px; height: 22px; display: grid; place-items: center; border: 0; background: none; color: var(--muted); border-radius: 4px; padding: 0; }
+.tog svg { transition: transform .15s; }
+.tog[aria-expanded="true"] svg { transform: rotate(90deg); }
+.go { border: 0; background: none; padding: 2px 4px; text-align: left; min-width: 0; border-radius: 4px; display: block; }
+.go:hover { background: var(--accent-soft); }
+.go .k { display: block; font-size: 10.5px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; color: var(--accent); }
+.go .nm { display: block; font-weight: 600; line-height: 1.3; }
+.ixa .go { display: flex; gap: 6px; align-items: baseline; white-space: nowrap; overflow: hidden; }
+.ixa .go b { font-weight: 600; flex: none; font-variant-numeric: tabular-nums; }
+.ixa .go span { color: var(--muted); overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.ixa.cur { background: var(--accent-soft); }
+.ixa.cur .go b { color: var(--accent); }
+.cnt { font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums; padding-right: 2px; }
+.ixc { margin-left: 10px; padding-left: 10px; border-left: 1px solid var(--line); display: flex; flex-direction: column; gap: 1px; }
+.ixres { font-size: 12.5px; color: var(--muted); margin: 0 0 6px; }
+.ixa mark { background: var(--mark); color: var(--mark-ink); border-radius: 2px; }
+
+/* Ajustes */
+.settings { border-block: 1px solid var(--line); padding-block: 12px; }
+.settings summary { cursor: pointer; font-weight: 700; font-size: 13.5px; list-style: none; display: flex; align-items: center; gap: 6px; }
+.settings summary::-webkit-details-marker { display: none; }
+.settings summary svg { transition: transform .15s; color: var(--muted); }
+.settings[open] summary svg { transform: rotate(90deg); }
+.sgrid { display: flex; flex-direction: column; gap: 12px; margin-top: 12px; }
+.field { display: flex; flex-direction: column; gap: 4px; font-size: 12px; font-weight: 600; color: var(--muted); }
+.field select { padding: 7px 8px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--ink); font-weight: 400; font-size: 13.5px; width: 100%; }
+.chk { display: flex; gap: 8px; align-items: flex-start; font-size: 13.5px; }
+.chk input { margin-top: 3px; accent-color: var(--accent); }
+.hint { font-size: 12px; color: var(--muted); margin: 0; font-weight: 400; }
+
+/* Hoja de lectura */
+.reader {
+  overflow: auto; min-height: 0; overscroll-behavior: contain;
+  padding-block: 28px 64px; padding-left: 20px; padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.doc { max-width: 47rem; margin: 0 auto; }
+.dochead { padding-left: 3.25rem; margin-bottom: 18px; }
+.doctitle { font: 600 clamp(1.6rem, 2.6vw, 2.15rem)/1.15 var(--f-text); margin: 0; text-wrap: balance; letter-spacing: -.01em; }
+.docmeta { margin: 8px 0 0; color: var(--muted); font-size: 13px; display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; font-variant-numeric: tabular-nums; }
+.chip { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); background: var(--accent-soft); border-radius: 999px; padding: 2px 8px; }
+
+.u { display: grid; grid-template-columns: 2.75rem minmax(0, 1fr); column-gap: .5rem; padding: 4px 0; scroll-margin: 24px; }
+.gut { display: flex; flex-direction: column; align-items: center; gap: 3px; padding-top: 3px; }
+.pbtn {
+  width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--line); background: var(--surface);
+  color: var(--accent); display: grid; place-items: center; padding: 0; opacity: .3; transition: opacity .15s;
+}
+.u:hover .pbtn, .pbtn:focus-visible, .u.cur .pbtn { opacity: 1; }
+.u.cur .pbtn { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+@media (hover: none) { .pbtn { opacity: .85; } }
+.gnum { font-size: 11px; font-weight: 600; color: var(--muted); font-variant-numeric: tabular-nums; line-height: 1; text-align: center; max-width: 2.75rem; overflow-wrap: anywhere; }
+.body { min-width: 0; }
+.body p { margin: 0 0 .55em; }
+.u.a .body p, .u.p .body p { font: 17.5px/1.62 var(--f-text); max-width: 66ch; }
+.al { font-family: var(--f-ui); font-weight: 700; font-size: .84em; letter-spacing: .005em; }
+.u .body p.note, .u.a .body p.note { font: 12.5px/1.45 var(--f-ui); color: var(--muted); margin-top: -.2em; }
+.u .body p.note::before { content: "Nota · "; font-weight: 700; letter-spacing: .04em; }
+.u .body p.note.nl::before { content: none; }
+[hidden] { display: none !important; }
+.app #btnAdd, .app #addSec, .app .where, .app #explRow, .app #sumSet, .app #natRow, .app #voiceField { display: none !important; }
+.dl { display: flex; flex-direction: column; gap: 6px; align-items: flex-start; width: 100%; }
+.dl .prog { width: 100%; height: 4px; background: var(--line); border-radius: 2px; overflow: hidden; }
+.dl .prog i { display: block; height: 100%; background: var(--accent); width: 0; transition: width .3s; }
+.appnote { font-size: 12.5px; color: var(--muted); margin: 0; }
+.u.h { margin-top: 22px; }
+.u.h:first-child { margin-top: 0; }
+.hk { font-size: 11.5px; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; color: var(--accent); margin: 0 0 4px !important; }
+.hn { font: 600 1.25rem/1.25 var(--f-text); margin: 0 0 6px; text-wrap: balance; }
+.u.h.l0 .hn, .u.h.l1 .hn, .u.h.l2 .hn { font-size: 1.55rem; }
+.u.h.l4 .hn, .u.h.l5 .hn { font-size: 1.08rem; }
+.u.off .body { opacity: .42; }
+.u.off .gnum { opacity: .55; }
+.s.on, .al.on, .hnt.on, .hk.on {
+  background: var(--mark); color: var(--mark-ink); border-radius: 3px; box-shadow: 0 0 0 2px var(--mark);
+  -webkit-box-decoration-break: clone; box-decoration-break: clone;
+}
+.empty { color: var(--muted); padding: 24px 0; }
+
+.floaters { position: absolute; right: max(16px, env(safe-area-inset-right, 0px)); bottom: 16px; left: 346px; display: flex; flex-direction: column; align-items: flex-end; gap: 8px; pointer-events: none; z-index: 5; }
+.backpill, .toast { pointer-events: auto; }
+.backpill { border: 0; background: var(--ink); color: var(--bg); border-radius: 999px; padding: 9px 16px; font-weight: 600; font-size: 13.5px; box-shadow: 0 4px 16px rgba(0,0,0,.18); }
+.toast { background: var(--surface); color: var(--ink); border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; font-size: 13.5px; max-width: 420px; box-shadow: 0 6px 20px rgba(0,0,0,.14); }
+
+/* Reproductor */
+.player { flex: none; background: var(--surface); border-top: 1px solid var(--line); }
+.pl-in {
+  display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 16px; padding-block: 10px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.transport { display: flex; align-items: center; gap: 4px; }
+.tbtn { width: 40px; height: 40px; border-radius: 50%; border: 0; background: transparent; display: grid; place-items: center; color: var(--ink); padding: 0; }
+.tbtn:hover { background: var(--accent-soft); }
+.playbtn { width: 52px; height: 52px; border-radius: 50%; border: 0; background: var(--accent); color: var(--accent-ink); display: grid; place-items: center; padding: 0; }
+.playbtn:hover { filter: brightness(1.07); }
+.now { min-width: 0; }
+.now-t { font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.now-s { font-size: 12.5px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-variant-numeric: tabular-nums; }
+.bar { height: 4px; background: var(--line); border-radius: 2px; margin-top: 7px; overflow: hidden; }
+.bar i { display: block; height: 100%; width: 0; background: var(--accent); border-radius: 2px; transition: width .4s; }
+.speed { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; color: var(--muted); }
+.speed select { padding: 7px 6px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--ink); font-weight: 600; font-size: 13.5px; font-variant-numeric: tabular-nums; }
+
+/* Panel de leyes */
+.panel { position: fixed; inset: 0; background: var(--scrim); z-index: 40; overflow: auto; padding-block: max(5vh, env(safe-area-inset-top, 0px)); padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.card { background: var(--surface); max-width: 600px; margin: 0 auto; border-radius: 14px; border: 1px solid var(--line); padding: 20px 22px 22px; display: flex; flex-direction: column; gap: 18px; }
+.card-h { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.card h2 { margin: 0; font: 600 1.35rem/1.2 var(--f-text); }
+.card h3 { margin: 0 0 8px; font-size: 13px; font-weight: 700; letter-spacing: .02em; }
+.laws { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.laws li { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-top: 1px solid var(--line); flex-wrap: wrap; }
+.laws li:first-child { border-top: 0; }
+.laws li.cur { background: var(--accent-soft); }
+.laws .info { flex: 1 1 200px; min-width: 0; }
+.laws .info button { border: 0; background: none; padding: 0; font-weight: 600; text-align: left; overflow-wrap: anywhere; }
+.laws .info button:hover { color: var(--accent); }
+.laws .meta { font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.laws .acts { display: flex; gap: 4px; flex-wrap: wrap; }
+.laws input { padding: 6px 8px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); width: 100%; }
+.drop {
+  position: relative; border: 1.5px dashed var(--line); border-radius: 12px; padding: 20px 16px; text-align: center;
+  background: var(--bg); transition: border-color .15s, background .15s;
+}
+.drop.over { border-color: var(--accent); background: var(--accent-soft); }
+.drop input { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; }
+.drop p { margin: 0; }
+.drop .t { font-weight: 600; }
+.drop .m { font-size: 12.5px; color: var(--muted); margin-top: 4px; }
+.drop.has .t { color: var(--accent); }
+.paste summary { cursor: pointer; font-size: 13.5px; font-weight: 600; }
+.paste textarea { width: 100%; min-height: 140px; margin-top: 8px; padding: 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); font: 13.5px/1.5 var(--f-text); resize: vertical; }
+.namefield { display: flex; flex-direction: column; gap: 4px; font-size: 12px; font-weight: 600; color: var(--muted); }
+.namefield input { padding: 9px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--ink); font-size: 14px; font-weight: 400; }
+.status { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.status.err { color: var(--danger); }
+.where { font-size: 13px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 14px; }
+.where ul { margin: 0 0 8px; padding-left: 18px; display: flex; flex-direction: column; gap: 4px; }
+.where a { color: var(--accent); font-weight: 600; }
+.where p { margin: 0; }
+
+.scrim { display: none; }
+
+@media (max-width: 899px) {
+  .only-narrow { display: inline-grid !important; }
+  .main { grid-template-columns: minmax(0, 1fr); }
+  .side {
+    position: fixed; top: 0; bottom: 0; left: 0; z-index: 30; width: min(88vw, 370px);
+    transform: translateX(-104%); transition: transform .22s ease; box-shadow: 0 0 40px rgba(0,0,0,.2);
+    padding-top: calc(12px + env(safe-area-inset-top, 0px)); padding-bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+  }
+  .side.open { transform: none; }
+  .side-head { display: flex !important; align-items: center; justify-content: space-between; }
+  .scrim { position: fixed; inset: 0; background: var(--scrim); z-index: 25; }
+  .scrim.show { display: block; }
+  .reader { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-top: 20px; }
+  .floaters { left: max(16px, env(safe-area-inset-left, 0px)); }
+}
+@media (max-width: 560px) {
+  .brand span { display: none; }
+  .lawpick { margin-left: 0; }
+  .lawpick .k { display: none; }
+  .btn-add-t { display: none; }
+  .dochead { padding-left: 0; }
+  .u { grid-template-columns: 2.1rem minmax(0, 1fr); column-gap: .35rem; }
+  .pbtn { width: 26px; height: 26px; }
+  .u.a .body p, .u.p .body p { font-size: 16.5px; }
+  .pl-in { gap: 10px; }
+  .tbtn { width: 36px; height: 36px; }
+  .playbtn { width: 48px; height: 48px; }
+  .speed .lbl { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .card { padding: 16px; }
+}
+.side-head { display: none; }
+.explrow { display: flex; flex-direction: column; gap: 6px; align-items: flex-start; }
+.explrow .btn svg { color: var(--accent); }
+.sumset { display: flex; flex-direction: column; gap: 12px; }
+.expl {
+  margin: 14px 0 26px 3.25rem; padding: 16px 18px; border: 1px solid var(--line); border-radius: 12px;
+  background: var(--surface); display: flex; flex-direction: column; gap: 10px; max-width: 70ch; scroll-margin: 24px;
+}
+.expl-k { display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); }
+.expl h3 { margin: 4px 0 0; font: 600 1.05rem/1.3 var(--f-ui); text-wrap: balance; }
+.expl-t { font: 16px/1.62 var(--f-ui); white-space: pre-wrap; overflow-wrap: anywhere; }
+.expl-t.wait { color: var(--muted); }
+.expl-t.wait::after { content: ""; display: inline-block; width: 1.2em; text-align: left; animation: dots 1.2s steps(4) infinite; }
+@keyframes dots { 0% { content: ""; } 25% { content: "."; } 50% { content: ".."; } 75% { content: "..."; } }
+.expl-n { margin: 0; font-size: 12px; color: var(--muted); }
+.expl-n.err { color: var(--danger); font-size: 13px; }
+.expl.fixed .expl-t { white-space: normal; }
+.expl.fixed .expl-t p { margin: 0 0 .7em; }
+.expl.fixed .expl-t p:last-child { margin-bottom: 0; }
+.expl.fixed .row { display: flex; gap: 8px; flex-wrap: wrap; }
+.expl.live { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+.expl-k .num { color: var(--muted); font-weight: 600; }
+.docsrc { margin: 10px 0 0; font-size: 12.5px; line-height: 1.5; color: var(--muted); max-width: 66ch; }
+.packset { display: flex; flex-direction: column; gap: 12px; }
+@media (max-width: 560px) { .expl { margin-left: 0; padding: 14px; } }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; scroll-behavior: auto !important; }
+}
+</style>
+
+<header class="top">
+  <div class="top-in">
+    <button class="iconbtn only-narrow" id="btnIndex" aria-label="Abrir índice" aria-controls="side" aria-expanded="false">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+    </button>
+    <div class="brand">
+      <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="9" width="3" height="6" rx="1.5" fill="currentColor"/><rect x="8.5" y="5" width="3" height="14" rx="1.5" fill="currentColor"/><rect x="14" y="7.5" width="3" height="9" rx="1.5" fill="currentColor"/><rect x="19.5" y="10" width="2" height="4" rx="1" fill="currentColor" opacity=".6"/></svg>
+      <span>Leyes en Voz Alta</span>
+    </div>
+    <button class="lawpick" id="btnLaws" aria-haspopup="dialog" title="Cambiar de ley">
+      <span class="k">Ley</span><span class="n" id="lawName">—</span>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+    </button>
+    <span class="spacer"></span>
+    <button class="btn primary" id="btnAdd" aria-haspopup="dialog">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+      <span class="btn-add-t">Cargar ley</span>
+    </button>
+  </div>
+</header>
+
+<div class="main">
+  <aside class="side" id="side" aria-label="Índice y selección">
+    <div class="side-head">
+      <b>Índice</b>
+      <button class="iconbtn" id="btnCloseSide" aria-label="Cerrar índice">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <section class="selbox" aria-labelledby="selTitle">
+      <h2 class="eyebrow" id="selTitle">Qué escuchar</h2>
+      <div class="row">
+        <button class="btn" id="selAll">Toda la ley</button>
+        <button class="btn" id="selNone">Desmarcar todo</button>
+      </div>
+      <form class="range" id="rangeForm">
+        <label for="rFrom">Del artículo<input id="rFrom" inputmode="numeric" autocomplete="off" placeholder="12"></label>
+        <label for="rTo">al<input id="rTo" inputmode="numeric" autocomplete="off" placeholder="23"></label>
+        <button class="btn" type="submit">Marcar rango</button>
+      </form>
+      <label class="field" for="tema" id="temaRow" hidden>O escucha un tema completo
+        <select id="tema"></select>
+      </label>
+      <p class="sum" id="selSum" aria-live="polite"></p>
+      <div class="explrow" id="explRow" hidden>
+        <button class="btn" id="btnExplain">
+          <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z" fill="currentColor"/><path d="M18.5 15l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z" fill="currentColor" opacity=".7"/></svg>
+          Explicar con Claude
+        </button>
+        <p class="hint">Explica lo último que escuchaste o, si aún no escuchas nada, lo marcado. Usa el modelo ligero de Claude y guarda cada explicación para no gastar dos veces.</p>
+      </div>
+    </section>
+    <details class="settings" id="settings">
+      <summary><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>Ajustes de lectura</summary>
+      <div class="sgrid">
+        <div class="packset" id="packSet" hidden>
+          <label class="chk" id="natRow"><input type="checkbox" id="natVoice"> Voz natural grabada (en el celular sigue sonando con la pantalla apagada)</label>
+          <label class="chk"><input type="checkbox" id="temaExpl"> Escuchar la explicación al terminar cada tema</label>
+        </div>
+        <label class="field" for="voice" id="voiceField">Voz
+          <select id="voice"></select>
+          <span class="hint" id="voiceHint"></span>
+        </label>
+        <label class="field" for="after">Al terminar un artículo
+          <select id="after">
+            <option value="next">Seguir con el siguiente</option>
+            <option value="pause">Pausar</option>
+            <option value="repeat">Repetir el mismo artículo</option>
+          </select>
+        </label>
+        <label class="field" for="sleep">Apagar la lectura en
+          <select id="sleep">
+            <option value="0">No apagar</option>
+            <option value="15">15 minutos</option>
+            <option value="30">30 minutos</option>
+            <option value="45">45 minutos</option>
+            <option value="60">1 hora</option>
+            <option value="90">1 hora 30 minutos</option>
+          </select>
+        </label>
+        <label class="chk" id="notesRow"><input type="checkbox" id="skipNotes"> Omitir notas de reforma (DOF, P.O.)</label>
+        <label class="chk" id="headsRow"><input type="checkbox" id="readHeads"> Leer títulos y capítulos</label>
+        <div class="sumset" id="sumSet" hidden>
+          <label class="chk"><input type="checkbox" id="autoSum"> Al terminar lo marcado, pedir a Claude una explicación de lo leído (solo en rangos de hasta 30 artículos)</label>
+          <label class="chk"><input type="checkbox" id="readSum"> Leer la explicación en voz alta</label>
+        </div>
+        <p class="hint">Atajos: barra espaciadora para reproducir o pausar; flechas izquierda y derecha para cambiar de artículo.</p>
+      </div>
+    </details>
+    <div class="search">
+      <label class="vh" for="q">Buscar en la ley</label>
+      <input type="search" id="q" placeholder="Buscar artículo o palabra (ej. 80, sucesión)" autocomplete="off">
+    </div>
+    <nav class="ix" id="ix" aria-label="Índice de la ley"></nav>
+  </aside>
+  <div class="scrim" id="scrim"></div>
+  <main class="reader" id="reader" tabindex="-1">
+    <article class="doc" id="doc"></article>
+  </main>
+  <div class="floaters">
+    <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+    <button class="backpill" id="backPill" hidden>Volver a lo que se está leyendo</button>
+  </div>
+</div>
+
+<footer class="player">
+  <div class="pl-in">
+    <div class="transport">
+      <button class="tbtn" id="btnPrev" aria-label="Artículo anterior" title="Artículo anterior">
+        <svg width="20" height="20" viewBox="0 0 24 24"><path d="M6 5h2.2v14H6zM19 5.6v12.8L9.6 12z" fill="currentColor"/></svg>
+      </button>
+      <button class="playbtn" id="btnPlay" aria-label="Reproducir">
+        <svg id="icPlay" width="24" height="24" viewBox="0 0 24 24"><path d="M8.5 5.4v13.2L19 12z" fill="currentColor"/></svg>
+        <svg id="icPause" width="24" height="24" viewBox="0 0 24 24" hidden><path d="M7 5h3.6v14H7zM13.4 5H17v14h-3.6z" fill="currentColor"/></svg>
+      </button>
+      <button class="tbtn" id="btnNext" aria-label="Artículo siguiente" title="Artículo siguiente">
+        <svg width="20" height="20" viewBox="0 0 24 24"><path d="M15.8 5H18v14h-2.2zM5 5.6v12.8L14.4 12z" fill="currentColor"/></svg>
+      </button>
+    </div>
+    <div class="now">
+      <div class="now-t" id="nowT">—</div>
+      <div class="now-s" id="nowS"></div>
+      <div class="bar" aria-hidden="true"><i id="barFill"></i></div>
+    </div>
+    <label class="speed" for="rate"><span class="lbl">Velocidad</span>
+      <select id="rate">
+        <option value="0.75">0.75×</option>
+        <option value="0.9">0.9×</option>
+        <option value="1">1×</option>
+        <option value="1.15">1.15×</option>
+        <option value="1.25">1.25×</option>
+        <option value="1.5">1.5×</option>
+        <option value="1.75">1.75×</option>
+        <option value="2">2×</option>
+      </select>
+    </label>
+  </div>
+</footer>
+
+<div class="panel" id="panel" hidden>
+  <div class="card" role="dialog" aria-modal="true" aria-labelledby="panelTitle">
+    <div class="card-h">
+      <h2 id="panelTitle">Tus leyes</h2>
+      <button class="iconbtn" id="btnClosePanel" aria-label="Cerrar">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <ul class="laws" id="lawsList"></ul>
+    <section id="addSec" aria-labelledby="addTitle">
+      <h3 id="addTitle">Agregar una ley</h3>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div class="drop" id="drop">
+          <input type="file" id="file" accept=".pdf,.docx,.txt,.htm,.html,application/pdf,text/plain,application/vnd.openxmlformats-officedocument.wordprocessingml.document" aria-label="Elegir archivo de la ley">
+          <p class="t" id="dropT">Elige un archivo o arrástralo aquí</p>
+          <p class="m">PDF con texto, Word (.docx) o texto (.txt)</p>
+        </div>
+        <details class="paste" id="pasteBox">
+          <summary>O pega el texto de la ley</summary>
+          <label class="vh" for="paste">Texto de la ley</label>
+          <textarea id="paste" placeholder="Pega aquí el texto copiado de la ley…"></textarea>
+        </details>
+        <label class="namefield" for="newName">Nombre
+          <input id="newName" placeholder="Ej. Ley Agraria" autocomplete="off">
+        </label>
+        <div class="row">
+          <button class="btn primary" id="btnLoad" disabled>Agregar y abrir</button>
+          <span class="status" id="loadStatus" role="status" aria-live="polite"></span>
+        </div>
+      </div>
+    </section>
+    <div class="where">
+      <h3>¿Dónde descargar las leyes?</h3>
+      <ul>
+        <li><a href="https://www.diputados.gob.mx/LeyesBiblio/index.htm" target="_blank" rel="noopener">Leyes federales vigentes — Cámara de Diputados</a></li>
+        <li><a href="https://www.diputados.gob.mx/LeyesBiblio/pdf/LAgra.pdf" target="_blank" rel="noopener">Ley Agraria (PDF vigente)</a></li>
+        <li><a href="https://www.diputados.gob.mx/LeyesBiblio/gobiernos.htm" target="_blank" rel="noopener">Leyes de los estados — Cámara de Diputados</a></li>
+        <li><a href="https://legislacion.scjn.gob.mx/" target="_blank" rel="noopener">Legislación federal y estatal — SCJN</a></li>
+      </ul>
+      <p>Usa el PDF: los archivos .doc antiguos no se pueden leer aquí (guárdalos como .docx). Los PDF escaneados como imagen no tienen texto que leer.</p>
+    </div>
+  </div>
+</div>
+
+<!--@@APPJS@@--><script>
+/*@@CORE@@*/
+</script>
+<script>
+(() => {
+  'use strict';
+  const INSTRUCTIVO = /*@@INSTR@@*/;
+  const PACKS = /*@@PACKS@@*/;
+  // En la app de Android las leyes vienen de un catálogo en GitHub; en la página web van incluidas
+  const REMOTE = /*@@REMOTE@@*/;
+  const APP = !!REMOTE;
+  const APP_VERSION = /*@@APPVER@@*/;
+  const CPS = 15; // caracteres por segundo a velocidad 1×
+  const PDFJS = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
+  const PDFW = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  const MAMMOTH = 'https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js';
+  const KNOWN = { lagra: 'Ley Agraria', cpeum: 'Constitución Política de los Estados Unidos Mexicanos', ccf: 'Código Civil Federal', cnpcf: 'Código Nacional de Procedimientos Civiles y Familiares', cfpc: 'Código Federal de Procedimientos Civiles', lamp: 'Ley de Amparo', cnpp: 'Código Nacional de Procedimientos Penales', cpf: 'Código Penal Federal' };
+
+  const $ = s => document.querySelector(s);
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const fold = s => String(s).normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+  const reduced = () => { try { return matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) { return false; } };
+  const store = {
+    get(k, d) { try { const v = localStorage.getItem('lev:' + k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
+    set(k, v) { try { localStorage.setItem('lev:' + k, JSON.stringify(v)); } catch (e) {} },
+    del(k) { try { localStorage.removeItem('lev:' + k); } catch (e) {} }
+  };
+
+  /* ---------- Biblioteca (IndexedDB, con respaldo en memoria) ---------- */
+  const DB = (() => {
+    let dbp = null; const mem = new Map();
+    function open() {
+      if (dbp) return dbp;
+      dbp = new Promise(res => {
+        try {
+          const r = indexedDB.open('leyes-en-voz', 1);
+          r.onupgradeneeded = () => r.result.createObjectStore('laws', { keyPath: 'id' });
+          r.onsuccess = () => res(r.result); r.onerror = () => res(null); r.onblocked = () => res(null);
+        } catch (e) { res(null); }
+      });
+      return dbp;
+    }
+    async function run(mode, fn) {
+      const db = await open(); if (!db) return undefined;
+      return new Promise(res => {
+        try {
+          const t = db.transaction('laws', mode); const req = fn(t.objectStore('laws'));
+          t.oncomplete = () => res(req ? req.result : true); t.onerror = () => res(undefined); t.onabort = () => res(undefined);
+        } catch (e) { res(undefined); }
+      });
+    }
+    return {
+      async all() { const r = await run('readonly', s => s.getAll()); const list = Array.isArray(r) ? r : []; mem.forEach((v, k) => { if (!list.some(x => x.id === k)) list.push(v); }); return list; },
+      async get(id) { const r = await run('readonly', s => s.get(id)); return (r && r.id) ? r : (mem.get(id) || null); },
+      async put(law) { mem.set(law.id, law); const ok = await run('readwrite', s => s.put(law)); return ok !== undefined; },
+      async del(id) { mem.delete(id); await run('readwrite', s => s.delete(id)); }
+    };
+  })();
+
+  /* ---------- Estado ---------- */
+  const S = {
+    law: null, units: [], meta: { articles: 0, headings: 0 },
+    sel: new Set(), extra: new Set(),
+    queue: [], qpos: new Map(), qchars: [], qtotal: 0,
+    cur: { u: -1, seg: 0 }, segs: [], activeU: -1,
+    playing: false, gen: 0, awaiting: false, started: false, fails: 0, lastSpeak: 0, utt: null,
+    follow: true, sleepAt: 0, openH: new Set(), searchQ: '',
+    settings: Object.assign({ rate: 1, voice: '', after: 'next', skipNotes: true, readHeadings: true, autoSummary: true, readSummary: true, naturalVoice: true, temaExpl: true }, store.get('settings', {})),
+    read: new Set(), sampler: null, sum: null, explCtl: null,
+    pk: null, inExpl: null, afterExpl: false
+  };
+  const synth = ('speechSynthesis' in window) ? window.speechSynthesis : null;
+  const saveSettings = () => store.set('settings', S.settings);
+  // Leyes integradas con audio grabado y explicaciones por tema
+  const audioMode = () => !!(S.pk && S.pk.audioOk && (APP || S.settings.naturalVoice !== false));
+  // El audio grabado se hizo sin notas de reforma y con títulos y capítulos
+  const SO = () => audioMode() ? Object.assign({}, S.settings, { skipNotes: true, readHeadings: true }) : S.settings;
+  const unitW = u => (audioMode() && S.pk.dur[u.i] != null) ? S.pk.dur[u.i] * CPS : LV.unitChars(u, SO());
+  const AUD = new Audio(); AUD.preload = 'auto';
+  if (APP) AUD.crossOrigin = 'anonymous';
+  const A = { mode: 'track', k: 0, lastU: -1, endT: 0, pendingSeek: null, switching: false, afterExpl: false };
+  const pad2 = n => String(n).padStart(2, '0');
+
+  /* ---------- Utilidades ---------- */
+  function fmtDur(sec, exact) {
+    sec = Math.max(0, Math.round(sec));
+    if (sec < 60) return 'menos de 1 min';
+    const m = Math.round(sec / 60);
+    const h = Math.floor(m / 60), r = m % 60;
+    const t = m < 60 ? m + ' min' : h + ' h' + (r ? ' ' + r + ' min' : '');
+    return exact ? t : '≈ ' + t;
+  }
+  const isSelectable = u => u.type === 'article' || u.type === 'pre';
+  const shortLabel = u => u.type === 'heading' ? u.label : (u.trans && !/^Art/.test(u.label) ? u.label + ' transitorio' : u.label);
+  let toastT = 0;
+  function toast(msg, ms = 4800) {
+    const t = $('#toast'); t.textContent = msg; t.hidden = false;
+    clearTimeout(toastT); toastT = setTimeout(() => { t.hidden = true; }, ms);
+  }
+  function rangesOf(set) {
+    const a = [...set].sort((x, y) => x - y); const out = []; let s = null, p = null;
+    for (const v of a) { if (s === null) { s = p = v; } else if (v === p + 1) { p = v; } else { out.push(s === p ? s : [s, p]); s = p = v; } }
+    if (s !== null) out.push(s === p ? s : [s, p]);
+    return out;
+  }
+  function setFromRanges(r) { const s = new Set(); (r || []).forEach(x => { if (Array.isArray(x)) { for (let i = x[0]; i <= x[1]; i++) s.add(i); } else s.add(x); }); return s; }
+
+  /* ---------- Abrir una ley ---------- */
+  function openLaw(law, opts = {}) {
+    if (S.playing) pause();
+    closeExplain();
+    S.law = law;
+    const parsed = LV.parseLaw(law.text);
+    S.units = parsed.units; S.meta = { articles: parsed.articles, headings: parsed.headings };
+    S.extra.clear(); S.activeU = -1; S.openH = new Set(); S.read = new Set();
+    clearExpl(); A.mode = 'track'; A.k = 0; A.lastU = -1;
+    try { AUD.pause(); } catch (e) {}
+    S.pk = law.pack ? buildPk(law.pack) : null;
+    if (S.pk && APP) scanLocal(S.pk);
+    applyModeUI(); renderTemas();
+    const saved = store.get('sel:' + law.id, null);
+    if (saved) S.sel = new Set([...setFromRanges(saved)].filter(i => S.units[i] && isSelectable(S.units[i])));
+    else S.sel = new Set(S.units.filter(u => u.type === 'article').map(u => u.i));
+    // índice: abrir niveles superiores
+    const levels = S.units.filter(u => u.type === 'heading').map(u => u.level);
+    const top = levels.length ? Math.min(...levels) : 0;
+    S.units.forEach(u => { if (u.type === 'heading' && (S.meta.articles <= 150 || u.level === top)) S.openH.add(u.i); });
+    const pos = store.get('pos:' + law.id, null);
+    S.cur = (pos && S.units[pos.u]) ? { u: pos.u, seg: 0 } : { u: -1, seg: 0 };
+    S.resumable = !!(pos && S.units[pos.u]);
+    store.set('last', law.id);
+    $('#lawName').textContent = law.name;
+    $('#q').value = ''; S.searchQ = '';
+    computeQueue();
+    renderDoc(); renderIndex(); updateSelUI(); updateNow();
+    if (S.cur.u >= 0) { markActive(S.cur.u); }
+    $('#reader').scrollTop = 0;
+    if (opts.scrollToCur && S.cur.u >= 0) scrollToUnit(S.cur.u, 'start');
+  }
+
+  /* ---------- Ley integrada: mapas de temas y audio ---------- */
+  function buildPk(pack) {
+    const n = S.units.length;
+    const rangeOf = new Array(n).fill(null), trackOf = new Array(n).fill(0);
+    const segsOf = new Map(), startT = [], endT = [], dur = [];
+    for (const r of pack.ranges) {
+      const a = S.units[r.from], b = S.units[r.to];
+      if (!a || !b || a.label !== r.fromLabel || b.label !== r.toLabel) { console.warn('Ley integrada: los temas no coinciden con el texto', r.k); return null; }
+      for (let i = r.from; i <= r.to; i++) rangeOf[i] = r;
+    }
+    for (const t of pack.tracks) {
+      for (const [u, p, s, t0, t1] of t.t) {
+        if (!S.units[u]) continue;
+        if (!segsOf.has(u)) { segsOf.set(u, []); startT[u] = t0; trackOf[u] = t.k; }
+        segsOf.get(u).push({ p, s, t0, t1 }); endT[u] = t1;
+      }
+    }
+    segsOf.forEach((v, u) => { dur[u] = endT[u] - startT[u] + 0.6; });
+    const total = pack.tracks.reduce((a, t) => a + t.dur, 0);
+    return { pack, ranges: pack.ranges, byK: new Map(pack.ranges.map(r => [r.k, r])), rangeOf, trackOf, segsOf, startT, endT, dur, total, audioOk: segsOf.size > 0 };
+  }
+  function rangeArts(r) {
+    const a = S.units[r.from], b = S.units[r.to];
+    if (a.trans) return 'Transitorios';
+    const s = u => u.label.replace(/^Artículo\s+/, '');
+    return r.from === r.to ? 'Art. ' + s(a) : `Arts. ${s(a)} a ${s(b)}`;
+  }
+  function renderTemas() {
+    const sel = $('#tema');
+    if (!S.pk) { sel.innerHTML = ''; return; }
+    const mins = r => r.dur ? ` · ${Math.max(1, Math.round(r.dur / 60))} min` : '';
+    sel.innerHTML = '<option value="">Elige un tema…</option>' + S.pk.ranges.map(r => `<option value="${r.k}">${r.k}. ${esc(r.title)} — ${esc(rangeArts(r))}${mins(r)}</option>`).join('');
+  }
+  function applyModeUI() {
+    const pk = !!S.pk, am = audioMode();
+    $('#packSet').hidden = !pk; $('#temaRow').hidden = !pk;
+    $('#natVoice').checked = am; $('#natVoice').disabled = pk && !S.pk.audioOk;
+    $('#temaExpl').checked = S.settings.temaExpl !== false;
+    $('#voiceField').hidden = am; $('#notesRow').hidden = am; $('#headsRow').hidden = am;
+    setExplainUI();
+  }
+  function explChunks(r) {
+    const out = [`Explicación del tema ${r.k}. ${r.title}.`];
+    r.text.split(/\n+/).forEach(par => LV.splitSentences(par).forEach(sen => LV.chunk(LV.speechify(sen, false)).forEach(c => out.push(c))));
+    return out;
+  }
+  function explDue(u) {
+    if (!S.pk || S.settings.temaExpl === false || S.settings.after === 'repeat') return null;
+    const unit = S.units[u]; if (!unit || !isSelectable(unit)) return null;
+    const r = S.pk.rangeOf[u]; if (!r) return null;
+    const nx = nextInQueue(u);
+    return (nx == null || S.pk.rangeOf[nx] !== r) ? r : null;
+  }
+  function markExpl(k, on) {
+    document.querySelectorAll('#doc .expl.live').forEach(e => e.classList.remove('live'));
+    const el = k ? document.getElementById('ex' + k) : null;
+    if (el && on) { el.classList.add('live'); if (S.follow) el.scrollIntoView({ block: 'nearest', behavior: reduced() ? 'auto' : 'smooth' }); }
+  }
+  function setExplBtns() {
+    const k = (S.sum && S.sum.playing && S.sum.k) || 0;
+    document.querySelectorAll('#doc [data-exlisten]').forEach(b => {
+      const on = +b.dataset.exlisten === k;
+      b.textContent = on ? 'Detener' : 'Escuchar explicación';
+      b.classList.toggle('primary', !on);
+    });
+  }
+  function clearExpl() {
+    if (S.inExpl || A.mode === 'expl') markExpl(0, false);
+    S.inExpl = null; S.afterExpl = false; A.afterExpl = false;
+    if (A.mode === 'expl') { A.mode = 'track'; A.k = 0; }
+  }
+
+  /* ---------- Cola de lectura ---------- */
+  function included(i) { return S.sel.has(i) || S.extra.has(i); }
+  function computeQueue() {
+    const q = [];
+    const heads = SO().readHeadings;
+    S.units.forEach(u => {
+      if (isSelectable(u)) { if (included(u.i)) q.push(u.i); }
+      else if (heads) {
+        for (let j = u.i + 1; j < u.end; j++) { if (isSelectable(S.units[j]) && included(j)) { q.push(u.i); break; } }
+      }
+    });
+    S.queue = q; S.qpos = new Map(q.map((u, k) => [u, k]));
+    let acc = 0; S.qchars = q.map(i => { const c = acc; acc += unitW(S.units[i]); return c; });
+    S.qtotal = acc;
+  }
+  function nextInQueue(i) {
+    if (S.qpos.has(i)) return S.queue[S.qpos.get(i) + 1] ?? null;
+    for (const j of S.queue) if (j > i) return j;
+    return null;
+  }
+  function prevInQueue(i) {
+    if (S.qpos.has(i)) { const k = S.qpos.get(i); return k > 0 ? S.queue[k - 1] : null; }
+    let r = null; for (const j of S.queue) { if (j < i) r = j; else break; }
+    return r;
+  }
+
+  /* ---------- Hoja de lectura ---------- */
+  function parasHTML(u, spans) {
+    if (!u.paras.length) {
+      return u.type === 'article' && !u.block ? `<p data-p="-1"><b class="al">${esc(u.raw || u.label)}</b></p>` : '';
+    }
+    return u.paras.map((p, pi) => {
+      let inner;
+      if (spans) inner = LV.splitSentences(p.text).map((s, si) => `<span class="s" data-s="${si}">${esc(s)}</span>`).join('');
+      else inner = esc(p.text);
+      const lab = (pi === 0 && u.type === 'article' && !u.block) ? `<b class="al">${esc(u.raw || u.label)}</b> ` : '';
+      return `<p data-p="${pi}"${p.note ? (/^nota\s*:/i.test(p.text) ? ' class="note nl"' : ' class="note"') : ''}>${lab}${inner}</p>`;
+    }).join('');
+  }
+  function bodyHTML(u, spans) {
+    if (u.type === 'heading') {
+      return `<p class="hk">${esc(u.label)}</p>${u.name ? `<h2 class="hn"><span class="hnt">${esc(u.name)}</span></h2>` : ''}${parasHTML(u, spans)}`;
+    }
+    if (u.type === 'pre' || u.block) return `<p class="hk">${esc(u.label)}</p>${parasHTML(u, spans)}`;
+    return parasHTML(u, spans);
+  }
+  function gnum(u) {
+    if (u.type !== 'article' || u.trans) return '';
+    if (u.block) return String(u.num);
+    const m = u.label.match(/^Artículo\s+(.*)$/);
+    return esc(m ? m[1] : u.label).replace(/\s+/g, '&nbsp;');
+  }
+  function unitHTML(u) {
+    const cls = u.type === 'heading' ? `u h l${u.level}` : (u.type === 'pre' ? 'u p' : 'u a');
+    const lab = u.type === 'heading' ? `Leer desde ${u.label}` : `Leer desde ${shortLabel(u)}`;
+    return `<section class="${cls}" id="u${u.i}" data-i="${u.i}"><div class="gut"><button class="pbtn" data-play="${u.i}" aria-label="${esc(lab)}" title="Leer desde aquí"><svg width="12" height="12" viewBox="0 0 24 24"><path d="M7 4.5v15L20 12z" fill="currentColor"/></svg></button><span class="gnum">${gnum(u)}</span></div><div class="body">${bodyHTML(u, false)}</div></section>`;
+  }
+  function explHTML(r) {
+    const N = S.pk.ranges.length;
+    const paras = r.text.split(/\n+/).filter(Boolean).map(p => `<p>${esc(p)}</p>`).join('');
+    return `<aside class="expl fixed" id="ex${r.k}" aria-label="Explicación del tema ${r.k}"><div><div class="expl-k">Explicación del tema <span class="num">${r.k} de ${N} · ${esc(rangeArts(r))}</span></div><h3>${esc(r.title)}</h3></div><div class="expl-t">${paras}</div><div class="row"><button class="btn primary" data-exlisten="${r.k}">Escuchar explicación</button></div></aside>`;
+  }
+  function renderDoc() {
+    const L = S.law, m = S.meta;
+    const total = S.pk && audioMode() ? S.pk.total * CPS : S.units.reduce((a, u) => a + LV.unitChars(u, SO()), 0);
+    const meta = [
+      L.id === 'instructivo' && !APP ? '<span class="chip">Ejemplo</span>' : '',
+      `<span>${m.articles} ${S.units.some(u => u.block) ? 'bloques' : (m.articles === 1 ? 'artículo' : 'artículos')}</span>`,
+      m.headings ? `<span>${m.headings} títulos y capítulos</span>` : '',
+      S.pk ? `<span>${S.pk.ranges.length} temas con explicación</span>` : '',
+      `<span>Completa: ${fmtDur(total / CPS)} a 1×</span>`,
+      S.pk && audioMode() && S.pk.pack.explTotal ? `<span>Explicaciones: ${fmtDur(S.pk.pack.explTotal)}</span>` : ''
+    ].join('');
+    const src = L.pack ? `<p class="docsrc">${esc(L.pack.source)}</p><p class="docsrc">${esc(L.pack.note)}</p>` : '';
+    const html = [`<header class="dochead"><h1 class="doctitle">${esc(L.name)}</h1><p class="docmeta">${meta}</p>${src}</header>`];
+    if (!S.units.length) html.push('<p class="empty">No se encontró texto en esta ley.</p>');
+    const endOf = new Map(); if (S.pk) S.pk.ranges.forEach(r => endOf.set(r.to, r));
+    S.units.forEach(u => { html.push(unitHTML(u)); if (endOf.has(u.i)) html.push(explHTML(endOf.get(u.i))); });
+    $('#doc').innerHTML = html.join('');
+    S.secEls = [...document.querySelectorAll('#doc .u')];
+    applyOffClasses();
+  }
+  function applyOffClasses() {
+    S.secEls.forEach(el => {
+      const i = +el.dataset.i, u = S.units[i];
+      let on;
+      if (isSelectable(u)) on = included(i);
+      else { on = false; for (let j = i + 1; j < u.end; j++) if (isSelectable(S.units[j]) && included(j)) { on = true; break; } }
+      el.classList.toggle('off', !on);
+    });
+  }
+  function markActive(i) {
+    if (S.activeU === i) return;
+    const prev = S.activeU;
+    if (prev >= 0 && S.units[prev]) {
+      const el = document.getElementById('u' + prev);
+      if (el) { el.classList.remove('cur'); el.querySelector('.body').innerHTML = bodyHTML(S.units[prev], false); }
+      const row = document.querySelector(`#ix .ixa[data-i="${prev}"]`); if (row) row.classList.remove('cur');
+    }
+    S.activeU = i;
+    if (i >= 0) {
+      const el = document.getElementById('u' + i);
+      if (el) { el.classList.add('cur'); el.querySelector('.body').innerHTML = bodyHTML(S.units[i], true); }
+      const row = document.querySelector(`#ix .ixa[data-i="${i}"]`); if (row) row.classList.add('cur');
+    }
+  }
+  function highlight() {
+    document.querySelectorAll('#doc .on').forEach(e => e.classList.remove('on'));
+    const i = S.cur.u; if (i < 0) return;
+    markActive(i);
+    const el = document.getElementById('u' + i); if (!el) return;
+    const seg = S.segs[S.cur.seg];
+    let t = null;
+    if (seg) {
+      if (seg.p === -1) t = el.querySelector('.al, .hnt') || el.querySelector('.hk');
+      else t = el.querySelector(`[data-p="${seg.p}"] [data-s="${seg.s}"]`);
+    }
+    if (t) t.classList.add('on');
+    if (S.follow) (t || el).scrollIntoView({ block: 'center', behavior: reduced() ? 'auto' : 'smooth' });
+  }
+  function scrollToUnit(i, block = 'start') {
+    const el = document.getElementById('u' + i);
+    if (el) el.scrollIntoView({ block, behavior: reduced() ? 'auto' : 'smooth' });
+  }
+
+  /* ---------- Índice ---------- */
+  function snippet(u) { const p = u.paras.find(x => !x.note); return p ? p.text.slice(0, 120) : ''; }
+  function articleRow(u, snip) {
+    const lab = u.type === 'pre' ? 'Encabezado' : (u.block ? u.label : (u.trans ? u.label : u.label.replace(/^Artículo/, 'Art.')));
+    return `<div class="ixa" data-i="${u.i}"><input type="checkbox" data-ck="${u.i}" aria-label="Marcar ${esc(shortLabel(u))}"${S.sel.has(u.i) ? ' checked' : ''}><button class="go" data-go="${u.i}"><b>${esc(lab)}</b><span>${snip != null ? snip : esc(snippet(u))}</span></button></div>`;
+  }
+  function renderIndex() {
+    const ix = $('#ix');
+    if (S.searchQ) return renderSearch();
+    const out = []; const stack = [];
+    const close = lvl => { while (stack.length && stack[stack.length - 1] >= lvl) { stack.pop(); out.push('</div>'); } };
+    S.units.forEach(u => {
+      if (u.type === 'heading') {
+        close(u.level);
+        const open = S.openH.has(u.i);
+        const n = countIn(u).total;
+        out.push(`<div class="ixh" data-h="${u.i}"><button class="tog" data-tog="${u.i}" aria-expanded="${open}" aria-label="Mostrar u ocultar ${esc(u.label)}"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button><input type="checkbox" data-ck="${u.i}" aria-label="Marcar ${esc(u.label)} completo"><button class="go" data-go="${u.i}"><span class="k">${esc(u.label)}</span>${u.name ? `<span class="nm">${esc(u.name.length > 90 ? u.name.slice(0, 88) + '…' : u.name)}</span>` : ''}</button><span class="cnt">${n}</span></div><div class="ixc" data-c="${u.i}"${open ? '' : ' hidden'}>`);
+        stack.push(u.level);
+      } else {
+        if (u.type === 'pre') close(-1);
+        out.push(articleRow(u));
+      }
+    });
+    close(-1);
+    ix.innerHTML = out.join('');
+    if (S.activeU >= 0) { const r = ix.querySelector(`.ixa[data-i="${S.activeU}"]`); if (r) r.classList.add('cur'); }
+    updateIndexChecks();
+  }
+  function countIn(h) {
+    let total = 0, on = 0;
+    for (let j = h.i + 1; j < h.end; j++) { const u = S.units[j]; if (isSelectable(u)) { total++; if (S.sel.has(j)) on++; } }
+    return { total, on };
+  }
+  function updateIndexChecks() {
+    document.querySelectorAll('#ix input[data-ck]').forEach(cb => {
+      const u = S.units[+cb.dataset.ck];
+      if (u.type === 'heading') { const c = countIn(u); cb.checked = c.total > 0 && c.on === c.total; cb.indeterminate = c.on > 0 && c.on < c.total; }
+      else cb.checked = S.sel.has(u.i);
+    });
+  }
+  function renderSearch() {
+    const q = S.searchQ.trim(); const ix = $('#ix');
+    const numM = q.match(/^(?:art[íi]culo|art\.?)?\s*(\d+)\s*(bis|ter)?$/i);
+    let res = [];
+    if (numM) {
+      const n = +numM[1];
+      res = S.units.filter(u => u.type === 'article' && u.num === n && (!numM[2] || new RegExp(numM[2], 'i').test(u.label)));
+      if (!res.length) res = S.units.filter(u => u.type === 'article' && u.num != null && String(u.num).startsWith(numM[1])).slice(0, 40);
+    } else {
+      const words = fold(q).split(/\s+/).filter(Boolean);
+      res = S.units.filter(u => {
+        if (!isSelectable(u)) return false;
+        const t = fold(u.label + ' ' + u.paras.map(p => p.text).join(' '));
+        return words.every(w => t.includes(w));
+      });
+    }
+    const shown = res.slice(0, 150);
+    const words = numM ? [] : fold(q).split(/\s+/).filter(Boolean);
+    const rows = shown.map(u => {
+      if (!words.length) return articleRow(u);
+      const full = u.paras.map(p => p.text).join(' ');
+      const f = fold(full); const k = f.indexOf(words[0]);
+      if (k < 0) return articleRow(u);
+      const a = Math.max(0, k - 30), b = Math.min(full.length, k + words[0].length + 70);
+      const snip = (a > 0 ? '…' : '') + esc(full.slice(a, k)) + '<mark>' + esc(full.slice(k, k + words[0].length)) + '</mark>' + esc(full.slice(k + words[0].length, b));
+      return articleRow(u, snip);
+    }).join('');
+    const msg = res.length ? `${res.length} ${res.length === 1 ? 'resultado' : 'resultados'}${res.length > 150 ? ' (se muestran 150)' : ''}` : 'Sin resultados. Prueba con un número de artículo o con otra palabra.';
+    ix.innerHTML = `<p class="ixres">${msg}</p>` + rows;
+    updateIndexChecks();
+  }
+
+  /* ---------- Selección ---------- */
+  function selectionChanged() {
+    S.extra.clear();
+    store.set('sel:' + S.law.id, rangesOf(S.sel));
+    computeQueue(); applyOffClasses(); updateIndexChecks(); updateSelUI(); updateNow();
+  }
+  function updateSelUI() {
+    const n = [...S.sel].filter(i => S.units[i] && S.units[i].type === 'article').length;
+    const pre = S.sel.has(0) && S.units[0] && S.units[0].type === 'pre';
+    const unit = S.units.some(u => u.block) ? 'bloques' : 'artículos';
+    const time = fmtDur(S.qtotal / CPS / S.settings.rate);
+    $('#selSum').innerHTML = n || pre
+      ? `<b>${n}</b> de ${S.meta.articles} ${unit} marcados${pre ? ' y el encabezado' : ''} · ${time} a ${S.settings.rate}×`
+      : 'No hay nada marcado. Marca artículos en el índice o usa «Toda la ley».';
+  }
+
+  /* ---------- Voces ---------- */
+  let voices = [];
+  function loadVoices() {
+    if (!synth) return;
+    voices = synth.getVoices() || [];
+    renderVoices();
+  }
+  function scoreVoice(v) {
+    let s = /^es[-_]MX/i.test(v.lang) ? 40 : /^es[-_]US/i.test(v.lang) ? 30 : /^es[-_]419/i.test(v.lang) ? 26 : /^es/i.test(v.lang) ? 12 : 0;
+    if (/natural|neural|online/i.test(v.name)) s += 6;
+    return s;
+  }
+  function pickVoice() {
+    if (!voices.length) return null;
+    if (S.settings.voice) { const v = voices.find(x => x.voiceURI === S.settings.voice); if (v) return v; }
+    const es = voices.filter(v => /^es/i.test(v.lang)).sort((a, b) => scoreVoice(b) - scoreVoice(a));
+    return es[0] || null;
+  }
+  function renderVoices() {
+    const sel = $('#voice'), hint = $('#voiceHint');
+    if (!synth) { sel.innerHTML = '<option>No disponible</option>'; sel.disabled = true; hint.textContent = 'Este navegador no puede leer en voz alta. Usa Chrome, Edge o Safari.'; return; }
+    const es = voices.filter(v => /^es/i.test(v.lang)).sort((a, b) => scoreVoice(b) - scoreVoice(a));
+    const list = es.length ? es : voices;
+    const auto = pickVoice();
+    sel.innerHTML = `<option value="">Automática${auto ? ' (' + esc(auto.name) + ')' : ''}</option>` +
+      list.map(v => `<option value="${esc(v.voiceURI)}">${esc(v.name)} · ${esc(v.lang)}</option>`).join('');
+    sel.value = list.some(v => v.voiceURI === S.settings.voice) ? S.settings.voice : '';
+    hint.textContent = !voices.length ? 'Cargando voces del equipo…' : (es.length ? `${es.length} ${es.length === 1 ? 'voz' : 'voces'} en español en este equipo.` : 'Este equipo no tiene voces en español; se usará la predeterminada.');
+  }
+
+  /* ---------- Motor de voz ---------- */
+  function loadSegs() {
+    const u = S.units[S.cur.u];
+    if (audioMode()) { S.segs = (u && S.pk.segsOf.get(u.i)) || [{ p: -1, s: 0, t0: 0, t1: 0 }]; return; }
+    S.segs = u ? LV.unitSegments(u, S.settings) : [];
+    if (!S.segs.length) S.segs = [{ p: -1, s: 0, text: '' }];
+  }
+  function savePos() { if (S.law && S.cur.u >= 0) store.set('pos:' + S.law.id, { u: S.cur.u }); }
+  function play() {
+    if (!S.queue.length) { toast('No hay nada marcado. Marca artículos en el índice o usa «Toda la ley».'); return; }
+    if (APP && !audioMode()) { toast('Esta sección es para leer en pantalla. Abre una ley desde la lista de leyes para escucharla.'); return; }
+    if (!audioMode() && !synth) { toast('Este navegador no puede leer en voz alta. Usa Chrome, Edge o Safari.'); return; }
+    if (S.cur.u < 0) S.cur = { u: S.queue[0], seg: 0 };
+    else if (!S.qpos.has(S.cur.u) && !S.extra.has(S.cur.u)) { const nx = nextInQueue(S.cur.u); S.cur = { u: nx ?? S.queue[0], seg: 0 }; A.lastU = -1; }
+    stopSummary();
+    S.playing = true; S.follow = true; S.resumable = false; S.fails = 0;
+    $('#backPill').hidden = true;
+    if (audioMode()) { updatePlayUI(); aPlay(); return; }
+    loadSegs(); if (S.cur.seg >= S.segs.length) S.cur.seg = 0;
+    wake(true); updatePlayUI(); speakSeg();
+  }
+  function pause() {
+    S.playing = false; S.gen++; S.awaiting = false;
+    if (synth) synth.cancel();
+    if (A.mode !== 'solo') { try { AUD.pause(); } catch (e) {} }
+    wake(false); updatePlayUI(); updateNow(); savePos();
+  }
+  function finish() {
+    S.playing = false; S.gen++; S.awaiting = false;
+    if (synth) synth.cancel();
+    try { AUD.pause(); } catch (e) {}
+    clearExpl(); A.lastU = -1;
+    wake(false);
+    document.querySelectorAll('#doc .on').forEach(e => e.classList.remove('on'));
+    markActive(-1);
+    S.cur = { u: -1, seg: 0 }; store.del('pos:' + S.law.id);
+    updatePlayUI(); updateNow(true);
+    const nRead = [...S.read].filter(i => S.units[i] && S.units[i].type === 'article').length;
+    if (S.pk) toast('Terminó la lectura de lo marcado.');
+    else if (S.settings.autoSummary && S.sampler && S.read.size && nRead <= 30) {
+      toast('Terminó la lectura. Claude está preparando la explicación…');
+      explain([...S.read]);
+    } else if (S.settings.autoSummary && S.sampler && nRead > 30) {
+      toast('Terminó la lectura. Para no gastar de más, la explicación automática es solo para rangos de hasta 30 artículos; usa «Explicar con Claude» si la quieres.', 9000);
+    } else toast('Terminó la lectura de lo marcado.');
+  }
+  function speakSeg() {
+    if (S.inExpl) return speakExpl();
+    const g = ++S.gen;
+    const seg = S.segs[S.cur.seg];
+    if (!seg) return unitEnd();
+    highlight(); updateNow(); savePos();
+    if (!seg.text) { S.awaiting = false; setTimeout(() => advance(g), 0); return; }
+    if (S.cur.seg === 0) S.read.add(S.cur.u);
+    const u = makeUtt(seg.text);
+    u.onstart = () => { if (g === S.gen) S.started = true; };
+    const failed = () => {
+      // terminó sin haber hablado: la voz no funciona en este navegador
+      if (++S.fails >= 3) { pause(); toast('No se pudo reproducir la voz. Prueba con Chrome o Edge, o elige otra voz en Ajustes de lectura.', 9000); return true; }
+      return false;
+    };
+    u.onend = () => {
+      if (g !== S.gen) return;
+      if (!S.started && seg.text.length > 15 && Date.now() - S.lastSpeak < 300) { if (failed()) return; }
+      else S.fails = 0;
+      advance(g);
+    };
+    u.onerror = e => {
+      if (g !== S.gen) return;
+      if (e.error === 'interrupted' || e.error === 'canceled') return;
+      if (e.error === 'not-allowed') { pause(); toast('El navegador bloqueó el audio. Oprime reproducir otra vez.'); return; }
+      if (failed()) return;
+      advance(g);
+    };
+    S.awaiting = true; S.started = false;
+    sayUtt(u, g);
+  }
+  // Explicación del tema con la voz del equipo (cuando la voz grabada está desactivada)
+  function speakExpl() {
+    const g = ++S.gen;
+    const E = S.inExpl, c = E.chunks[E.i];
+    if (c == null) { markExpl(0, false); S.inExpl = null; S.afterExpl = true; updateNow(); return unitEnd(); }
+    if (E.i === 0) markExpl(E.r.k, true);
+    updateNow();
+    const u = makeUtt(c);
+    u.onstart = () => { if (g === S.gen) S.started = true; };
+    u.onend = () => { if (g === S.gen) advance(g); };
+    u.onerror = e => { if (g !== S.gen || e.error === 'interrupted' || e.error === 'canceled') return; advance(g); };
+    S.awaiting = true; S.started = false;
+    sayUtt(u, g);
+  }
+  function makeUtt(text) {
+    const u = new SpeechSynthesisUtterance(text);
+    const v = pickVoice();
+    if (v) { u.voice = v; u.lang = v.lang; } else u.lang = 'es-MX';
+    u.rate = S.settings.rate; u.pitch = 1; u.volume = 1;
+    return u;
+  }
+  function sayUtt(u, g) {
+    S.utt = u; S.lastSpeak = Date.now();
+    if (synth.speaking || synth.pending) {
+      synth.cancel();
+      setTimeout(() => { if (g === S.gen) { synth.resume(); synth.speak(u); S.lastSpeak = Date.now(); } }, 70);
+    } else { synth.resume(); synth.speak(u); }
+  }
+  function advance(g) {
+    if (g !== S.gen || !S.playing) return;
+    S.awaiting = false;
+    if (sleepDue()) return;
+    if (S.inExpl) { S.inExpl.i++; return speakExpl(); }
+    S.cur.seg++;
+    if (S.cur.seg >= S.segs.length) unitEnd(); else speakSeg();
+  }
+  function unitEnd() {
+    const u = S.units[S.cur.u];
+    if (!S.afterExpl) {
+      const r = explDue(S.cur.u);
+      if (r) { S.inExpl = { r, chunks: explChunks(r), i: 0 }; return speakExpl(); }
+    }
+    S.afterExpl = false;
+    if (u && isSelectable(u)) {
+      if (S.settings.after === 'repeat') { S.cur.seg = 0; return speakSeg(); }
+      if (S.settings.after === 'pause') {
+        const nx = nextInQueue(S.cur.u);
+        if (nx == null) return finish();
+        S.cur = { u: nx, seg: 0 }; loadSegs(); pause(); highlight();
+        toast('En pausa. Oprime reproducir para seguir con ' + shortLabel(S.units[nx]) + '.');
+        return;
+      }
+    }
+    const nx = nextInQueue(S.cur.u);
+    if (nx == null) return finish();
+    S.cur = { u: nx, seg: 0 }; loadSegs(); speakSeg();
+  }
+  // Lleva la lectura a S.cur (desde el principio de esa unidad)
+  function resumeAt() {
+    if (A.mode === 'solo') stopSummary();
+    clearExpl(); A.lastU = -1;
+    if (audioMode()) {
+      loadSegs(); S.cur.seg = 0;
+      if (S.playing) aGoUnit(S.cur.u); else { try { AUD.pause(); } catch (e) {} highlight(); updateNow(); savePos(); }
+      return;
+    }
+    loadSegs();
+    if (S.playing) speakSeg(); else { highlight(); updateNow(); savePos(); }
+  }
+  function inExplNow() { return !!S.inExpl || A.mode === 'expl'; }
+  function jump(dir) {
+    if (inExplNow()) {
+      if (dir < 0) {
+        const t = A.mode === 'expl' ? AUD.currentTime : S.inExpl.i;
+        if (t > (A.mode === 'expl' ? 3 : 0) && S.playing) {
+          if (A.mode === 'expl') AUD.currentTime = 0; else { S.inExpl.i = 0; speakExpl(); }
+          return;
+        }
+        S.cur.seg = 0; S.follow = true; resumeAt(); return;
+      }
+      const t = nextInQueue(S.cur.u);
+      if (t == null) { toast('Ya es lo último marcado.'); return; }
+      S.cur = { u: t, seg: 0 }; S.follow = true; $('#backPill').hidden = true; resumeAt(); return;
+    }
+    if (S.cur.u < 0) { if (S.queue.length) { S.cur = { u: S.queue[0], seg: 0 }; } else return; }
+    else if (dir < 0 && S.playing && (audioMode() ? AUD.currentTime - (S.pk.startT[S.cur.u] ?? 0) > 3 : S.cur.seg > 0)) { S.cur.seg = 0; }
+    else {
+      const t = dir > 0 ? nextInQueue(S.cur.u) : prevInQueue(S.cur.u);
+      if (t == null) { if (dir > 0) { toast('Ya es lo último marcado.'); return; } S.cur.seg = 0; }
+      else S.cur = { u: t, seg: 0 };
+    }
+    S.follow = true; $('#backPill').hidden = true;
+    resumeAt();
+  }
+  function startAt(i) {
+    const u = S.units[i]; if (!u) return;
+    if (u.type === 'heading') {
+      let any = false;
+      for (let j = i + 1; j < u.end; j++) if (isSelectable(S.units[j]) && S.sel.has(j)) { any = true; break; }
+      if (!any) for (let j = i + 1; j < u.end; j++) if (isSelectable(S.units[j])) S.extra.add(j);
+    } else if (!S.sel.has(i)) S.extra.add(i);
+    computeQueue(); applyOffClasses();
+    let target = i;
+    if (!S.qpos.has(i)) target = nextInQueue(i);
+    if (target == null) return;
+    S.cur = { u: target, seg: 0 }; S.follow = true;
+    if (S.playing) resumeAt(); else { clearExpl(); A.lastU = -1; play(); }
+  }
+
+  /* ---------- Audio grabado (leyes integradas) ---------- */
+  function aNext(u) { let nx = nextInQueue(u); while (nx != null && !S.pk.segsOf.has(nx)) nx = nextInQueue(nx); return nx; }
+  const audioBase = () => (S.pk && S.pk.pack.audioBase) || 'audio/';
+  let srcSeq = 0;
+  function setSrc(name, t, then) {
+    A.switching = true; A.pendingSeek = t > 0 ? t : null; A.name = name;
+    const seq = ++srcSeq;
+    const apply = url => {
+      if (seq !== srcSeq) return;
+      AUD.defaultPlaybackRate = S.settings.rate;
+      AUD.src = url + (t > 0 ? '#t=' + t.toFixed(2) : '');
+      AUD.playbackRate = S.settings.rate;
+      A.isLocal = url.startsWith('blob:');
+      if (then) then();
+    };
+    const remote = audioBase() + name;
+    if (APP && S.pk && S.pk.local && S.pk.local.has(name)) localUrl(remote).then(apply, () => apply(remote));
+    else apply(remote);
+  }
+  // Audio descargado para escuchar sin internet (Cache API dentro de la app)
+  const blobs = new Map();
+  async function localUrl(remote) {
+    if (blobs.has(remote)) return blobs.get(remote);
+    const c = await caches.open(audioCacheName(S.pk.pack));
+    const r = await c.match(remote);
+    if (!r) throw new Error('no local');
+    const url = URL.createObjectURL(await r.blob());
+    blobs.set(remote, url);
+    while (blobs.size > 3) { const [k0, v0] = blobs.entries().next().value; URL.revokeObjectURL(v0); blobs.delete(k0); }
+    return url;
+  }
+  const audioCacheName = p => `audio:${p.id}:${p.v || 1}`;
+  function audioNames(p) { return p.tracks.map(t => `t${pad2(t.k)}.mp3`).concat(p.ranges.map(r => `e${pad2(r.k)}.mp3`)); }
+  async function scanLocal(pk) {
+    if (!APP || !('caches' in window)) return;
+    try {
+      const c = await caches.open(audioCacheName(pk.pack));
+      const keys = await c.keys();
+      const base = pk.pack.audioBase;
+      pk.local = new Set(keys.map(r => r.url).filter(u => u.startsWith(base)).map(u => u.slice(base.length)));
+    } catch (e) {}
+  }
+  function aStart() {
+    if (!S.playing && A.mode !== 'solo') return;
+    let p;
+    try { p = AUD.play(); } catch (e) { audioFailed(); return; }
+    if (p && p.then) p.then(() => { A.switching = false; }, e => {
+      const n = e && e.name;
+      if (n === 'AbortError') return;
+      if (n === 'NotAllowedError') {
+        if (A.mode === 'solo') stopSummary(); else pause();
+        toast('El navegador bloqueó el audio. Oprime reproducir otra vez.'); return;
+      }
+      audioFailed();
+    });
+  }
+  function aGoUnit(u) {
+    const P = S.pk;
+    if (!P.segsOf.has(u)) { const nx = aNext(u); if (nx == null) return finish(); u = nx; }
+    const k = P.trackOf[u], t0 = P.startT[u];
+    S.cur = { u, seg: 0 }; S.segs = P.segsOf.get(u);
+    A.lastU = u; A.endT = P.endT[u];
+    S.read.add(u);
+    const name = `t${pad2(k)}.mp3`;
+    const toLocal = APP && !A.isLocal && P.local && P.local.has(name);
+    if (A.mode !== 'track' || A.k !== k || !AUD.getAttribute('src') || toLocal) { A.mode = 'track'; A.k = k; setSrc(name, t0, aStart); }
+    else { try { AUD.currentTime = t0; } catch (e) {} aStart(); }
+    highlight(); updateNow(); savePos(); setMeta();
+  }
+  function aPlay() {
+    if (A.mode === 'expl') { markExpl(A.k, true); setMeta(); aStart(); return; }
+    const u = S.cur.u;
+    if (A.lastU === u && A.mode === 'track' && A.k === S.pk.trackOf[u] && AUD.getAttribute('src')) {
+      S.segs = S.pk.segsOf.get(u); setMeta(); aStart(); return;
+    }
+    aGoUnit(u);
+  }
+  function unitAtTime(k, t) {
+    let best = -1;
+    S.pk.segsOf.forEach((v, u) => { if (S.pk.trackOf[u] === k && S.pk.startT[u] <= t + 0.05 && (best < 0 || S.pk.startT[u] > S.pk.startT[best])) best = u; });
+    return best;
+  }
+  function aTick() {
+    if (!S.playing || !audioMode() || A.mode !== 'track' || A.switching || A.pendingSeek != null) return;
+    const P = S.pk, u = S.cur.u; if (u < 0 || A.lastU !== u) return;
+    const t = AUD.currentTime;
+    if (t < P.startT[u] - 1 || t > P.endT[u] + 1.2) {
+      // se movió la posición desde fuera (por ejemplo, la barra de la pantalla de bloqueo)
+      const v = unitAtTime(A.k, t); if (v < 0 || v === u) return;
+      S.cur = { u: v, seg: 0 }; S.segs = P.segsOf.get(v); A.lastU = v; A.endT = P.endT[v];
+      S.read.add(v); highlight(); updateNow(); savePos(); setMeta(); return;
+    }
+    const segs = S.segs; let k = S.cur.seg;
+    if (!segs[k] || t < segs[k].t0 - 0.05) k = 0;
+    while (k + 1 < segs.length && t >= segs[k + 1].t0 - 0.05) k++;
+    if (k !== S.cur.seg) { S.cur.seg = k; highlight(); updateNow(); }
+    if (t >= A.endT - 0.03) aUnitEnd();
+  }
+  function aUnitEnd() {
+    if (sleepDue()) return;
+    const u = S.cur.u, unit = S.units[u];
+    if (!A.afterExpl) {
+      const r = explDue(u);
+      if (r) return aStartExpl(r);
+    }
+    A.afterExpl = false;
+    if (unit && isSelectable(unit)) {
+      if (S.settings.after === 'repeat') return aGoUnit(u);
+      if (S.settings.after === 'pause') {
+        const nx = aNext(u);
+        if (nx == null) return finish();
+        pause(); A.lastU = -1;
+        S.cur = { u: nx, seg: 0 }; loadSegs(); highlight(); updateNow(); savePos();
+        toast('En pausa. Oprime reproducir para seguir con ' + shortLabel(S.units[nx]) + '.');
+        return;
+      }
+    }
+    const nx = aNext(u);
+    if (nx == null) return finish();
+    const P = S.pk;
+    if (A.mode === 'track' && A.k === P.trackOf[nx] && P.startT[nx] >= AUD.currentTime - 0.3 && P.startT[nx] - P.endT[u] < 1.2) {
+      // la siguiente unidad sigue en la misma pista: no hace falta saltar
+      S.cur = { u: nx, seg: 0 }; S.segs = P.segsOf.get(nx); A.lastU = nx; A.endT = P.endT[nx];
+      S.read.add(nx); highlight(); updateNow(); savePos(); setMeta();
+      return;
+    }
+    aGoUnit(nx);
+  }
+  function aStartExpl(r) {
+    A.mode = 'expl'; A.k = r.k; A.lastU = -1;
+    setSrc(`e${pad2(r.k)}.mp3`, 0, aStart);
+    document.querySelectorAll('#doc .on').forEach(e => e.classList.remove('on'));
+    markExpl(r.k, true); updateNow(); setMeta();
+  }
+  function audioFailed() {
+    if (!S.pk || !S.pk.audioOk) return;
+    if (A.mode === 'solo') { stopSummary(); toast('No se pudo cargar el audio de la explicación. Revisa tu conexión.'); return; }
+    if (APP) {
+      if (S.playing) pause();
+      A.lastU = -1; A.k = 0;
+      toast('No se pudo cargar el audio. Revisa tu conexión a internet, o descarga la ley desde la lista de leyes para escucharla sin internet.', 9000);
+      return;
+    }
+    const was = S.playing;
+    S.playing = false; S.pk.audioOk = false;
+    clearExpl(); A.mode = 'track'; A.k = 0; A.lastU = -1;
+    try { AUD.pause(); } catch (e) {}
+    computeQueue(); updateSelUI(); applyModeUI(); loadSegs(); S.cur.seg = 0;
+    toast('No se pudo cargar el audio grabado; se usará la voz del equipo.', 8000);
+    updatePlayUI(); updateNow();
+    if (was && synth) play();
+  }
+  AUD.addEventListener('loadedmetadata', () => {
+    AUD.playbackRate = S.settings.rate;
+    if (A.pendingSeek != null) {
+      const t = A.pendingSeek;
+      if (Math.abs(AUD.currentTime - t) > 0.4) { try { AUD.currentTime = t; } catch (e) {} }
+    }
+  });
+  AUD.addEventListener('playing', () => { A.switching = false; A.pendingSeek = null; A.retries = 0; });
+  AUD.addEventListener('seeked', () => { if (A.pendingSeek != null && Math.abs(AUD.currentTime - A.pendingSeek) < 0.5) A.pendingSeek = null; });
+  AUD.addEventListener('timeupdate', aTick);
+  AUD.addEventListener('ended', () => {
+    if (A.mode === 'solo') { endSolo(); return; }
+    if (A.mode === 'expl') {
+      markExpl(0, false); A.mode = 'track'; A.k = 0; A.afterExpl = true;
+      if (S.playing) aUnitEnd();
+      return;
+    }
+    if (S.playing && audioMode() && A.lastU === S.cur.u) aUnitEnd();
+  });
+  AUD.addEventListener('error', () => {
+    if (!AUD.getAttribute('src') || !(A.mode === 'solo' || S.playing)) return;
+    const err = AUD.error;
+    if (err && err.code === 2 && (A.retries || 0) < 2) {
+      // corte de red: reintentar desde donde iba
+      A.retries = (A.retries || 0) + 1;
+      const name = A.name;
+      const t = A.mode === 'track' ? Math.max(S.pk.startT[S.cur.u] || 0, AUD.currentTime || 0) : (AUD.currentTime || 0);
+      setTimeout(() => { if (S.playing || A.mode === 'solo') setSrc(name, t, aStart); }, 1200);
+      return;
+    }
+    audioFailed();
+  });
+  // Pausa o reanudación desde la pantalla de bloqueo, los audífonos o el sistema
+  AUD.addEventListener('pause', () => {
+    if (AUD.ended || A.switching) return;
+    if (A.mode === 'solo') { if (S.sum && S.sum.playing) { S.sum.playing = false; updatePlayUI(); updateNow(); setExplBtns(); } return; }
+    if (S.playing) { S.playing = false; S.gen++; updatePlayUI(); updateNow(); savePos(); }
+  });
+  AUD.addEventListener('play', () => {
+    if (A.mode === 'solo') { if (S.sum && !S.sum.playing) { S.sum.playing = true; updatePlayUI(); updateNow(); setExplBtns(); } return; }
+    if (!S.playing && audioMode() && (A.mode === 'expl' || A.lastU === S.cur.u)) { S.playing = true; updatePlayUI(); updateNow(); }
+  });
+  const NMS = (APP && window.capacitorMediaSession && window.capacitorExports && window.capacitorExports.Capacitor.isNativePlatform()) ? window.capacitorMediaSession.MediaSession : null;
+  const MS = {
+    ok: !!NMS || ('mediaSession' in navigator),
+    meta(m) { try { if (NMS) NMS.setMetadata(m).catch(() => {}); else navigator.mediaSession.metadata = new MediaMetadata(m); } catch (e) {} },
+    state(st) { try { if (NMS) NMS.setPlaybackState({ playbackState: st }).catch(() => {}); else navigator.mediaSession.playbackState = st === 'none' ? 'none' : st; } catch (e) {} },
+    handler(a, f) { try { if (NMS) NMS.setActionHandler({ action: a }, f).catch(() => {}); else navigator.mediaSession.setActionHandler(a, f); } catch (e) {} }
+  };
+  function setMeta() {
+    if (!MS.ok || !S.law) return;
+    try {
+      let title, album = S.law.name;
+      if (A.mode === 'expl' || A.mode === 'solo') { const r = S.pk && S.pk.byK.get(A.k); title = 'Explicación: ' + (r ? r.title : ''); }
+      else {
+        const u = S.units[S.cur.u]; title = u ? shortLabel(u) + (u.type === 'heading' && u.name ? ' · ' + u.name : '') : S.law.name;
+        const r = S.pk && S.pk.rangeOf[S.cur.u]; if (r) album = `Tema ${r.k}: ${r.title}`;
+      }
+      MS.meta({ title, artist: S.law.name, album });
+    } catch (e) {}
+  }
+  if (MS.ok) {
+    const h = MS.handler;
+    h('play', () => { if (A.mode === 'solo' && S.sum && S.sum.audio) { if (!S.sum.playing) resumeSolo(); } else if (!S.playing) play(); });
+    h('pause', () => { if (A.mode === 'solo') { try { AUD.pause(); } catch (e) {} } else if (S.sum && S.sum.playing) stopSummary(); else if (S.playing) pause(); });
+    h('nexttrack', () => jump(1));
+    h('previoustrack', () => jump(-1));
+  }
+  // Explicación suelta (botón «Escuchar explicación» de cada tema)
+  function playExplSolo(k) {
+    const r = S.pk && S.pk.byK.get(k); if (!r) return;
+    if (S.sum && S.sum.playing && S.sum.k === k) { stopSummary(); return; }
+    if (S.playing) pause();
+    stopSummary(); clearExpl();
+    if (audioMode()) {
+      S.sum = { audio: true, playing: true, title: r.title, k };
+      A.mode = 'solo'; A.k = k; A.lastU = -1;
+      setSrc(`e${pad2(k)}.mp3`, 0, aStart);
+      markExpl(k, true); updatePlayUI(); updateNow(); setExplBtns(); setMeta();
+    } else {
+      if (!synth) { toast('Este navegador no puede leer en voz alta.'); return; }
+      speakSummary(null, r.title, explChunks(r), k);
+    }
+  }
+  function resumeSolo() {
+    S.sum.playing = true; markExpl(S.sum.k, true);
+    updatePlayUI(); updateNow(); setExplBtns(); setMeta();
+    aStart();
+  }
+  function endSolo() {
+    if (S.sum) S.sum.playing = false;
+    A.mode = 'track'; A.k = 0;
+    markExpl(0, false); updatePlayUI(); updateNow(); setExplBtns();
+  }
+
+  /* Vigilante: algunos navegadores no avisan cuando termina una frase */
+  setInterval(() => {
+    if (!S.playing) return;
+    if (audioMode()) { if (sleepDue()) return; aTick(); updateNow(); return; }
+    if (S.sleepAt) updateNow();
+    if (S.awaiting && synth && !synth.speaking && !synth.pending && Date.now() - S.lastSpeak > 1600) {
+      if (!S.started) {
+        S.fails++;
+        if (S.fails >= 3) { pause(); toast('No se pudo reproducir la voz. Prueba con Chrome o Edge, o elige otra voz en Ajustes de lectura.', 8000); return; }
+      }
+      advance(S.gen);
+    }
+    sleepDue();
+  }, 1000);
+
+  function sleepDue() {
+    if (S.sleepAt && Date.now() >= S.sleepAt) {
+      S.sleepAt = 0; $('#sleep').value = '0';
+      pause(); toast('Se detuvo la lectura por el temporizador.');
+      return true;
+    }
+    return false;
+  }
+
+  let wl = null;
+  async function wake(on) {
+    try {
+      if (on) { if (!wl && navigator.wakeLock) { wl = await navigator.wakeLock.request('screen'); wl.addEventListener('release', () => { wl = null; }); } }
+      else if (wl) { const w = wl; wl = null; await w.release(); }
+    } catch (e) { wl = null; }
+  }
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible' && S.playing && !audioMode()) wake(true); });
+
+  /* ---------- Reproductor ---------- */
+  function updatePlayUI() {
+    const on = S.playing || !!(S.sum && S.sum.playing);
+    $('#icPlay').hidden = on; $('#icPause').hidden = !on;
+    $('#btnPlay').setAttribute('aria-label', on ? 'Pausar' : 'Reproducir');
+    if (MS.ok && (audioMode() || !APP)) MS.state(on ? 'playing' : ((S.cur.u >= 0 || A.mode === 'solo' || A.mode === 'expl') ? 'paused' : 'none'));
+  }
+  function togglePlay() {
+    if (A.mode === 'solo' && S.sum && S.sum.audio) { if (S.sum.playing) { try { AUD.pause(); } catch (e) {} } else resumeSolo(); return; }
+    if (S.sum && S.sum.playing) { stopSummary(); return; }
+    S.playing ? pause() : play();
+  }
+  function updateNow(done) {
+    const t = $('#nowT'), s = $('#nowS'), bar = $('#barFill');
+    if (S.sum && (S.sum.playing || A.mode === 'solo')) {
+      t.textContent = S.sum.k ? 'Explicación del tema ' + S.sum.k : 'Explicación de Claude';
+      s.textContent = (S.sum.playing ? '' : 'En pausa · ') + S.sum.title; return;
+    }
+    const ex = S.inExpl ? S.inExpl.r : (A.mode === 'expl' && S.pk ? S.pk.byK.get(A.k) : null);
+    if (ex) {
+      t.textContent = 'Explicación del tema ' + ex.k + ' · ' + ex.title;
+      s.textContent = (S.playing ? '' : 'En pausa · ') + `Tema ${ex.k} de ${S.pk.ranges.length} · después sigue la lectura`;
+      return;
+    }
+    const qn = S.queue.length;
+    const unitWord = S.units.some(u => u.block) ? 'bloques' : 'artículos';
+    const nArts = S.queue.filter(i => isSelectable(S.units[i])).length;
+    if (done || S.cur.u < 0) {
+      const first = S.queue.length ? S.units[S.queue.find(i => isSelectable(S.units[i])) ?? S.queue[0]] : null;
+      t.textContent = first ? (done ? 'Terminó la lectura' : 'Listo para escuchar') : 'Nada marcado';
+      s.textContent = first ? `${S.law.name} · ${nArts} ${unitWord} · ${fmtDur(S.qtotal / CPS / S.settings.rate)}` : 'Marca artículos en el índice';
+      bar.style.width = '0%';
+      return;
+    }
+    const u = S.units[S.cur.u];
+    t.textContent = shortLabel(u) + (u.type === 'heading' && u.name ? ' · ' + u.name : '');
+    const k = S.qpos.has(S.cur.u) ? S.qpos.get(S.cur.u) : -1;
+    let segFrac = S.segs.length ? S.cur.seg / S.segs.length : 0;
+    if (audioMode() && A.mode === 'track' && A.lastU === S.cur.u && S.pk.dur[S.cur.u]) segFrac = Math.min(1, Math.max(0, (AUD.currentTime - S.pk.startT[S.cur.u]) / S.pk.dur[S.cur.u]));
+    let doneChars = 0;
+    if (k >= 0) doneChars = S.qchars[k] + unitW(u) * segFrac;
+    const left = Math.max(0, S.qtotal - doneChars);
+    const parts = [];
+    if (!S.playing && S.resumable) parts.push('Continúa donde te quedaste');
+    else if (!S.playing) parts.push('En pausa');
+    const artPos = k >= 0 ? S.queue.slice(0, k + 1).filter(i => isSelectable(S.units[i])).length : 0;
+    if (k >= 0) parts.push(`${Math.max(artPos, 1)} de ${nArts}`);
+    parts.push(`quedan ${fmtDur(left / CPS / S.settings.rate)}`);
+    if (S.sleepAt) parts.push(`se apaga en ${fmtDur((S.sleepAt - Date.now()) / 1000)}`);
+    s.textContent = parts.join(' · ');
+    bar.style.width = (S.qtotal ? Math.min(100, doneChars / S.qtotal * 100) : 0).toFixed(1) + '%';
+  }
+
+  /* ---------- Explicación con Claude ---------- */
+  function setExplainUI() {
+    // en las leyes integradas las explicaciones ya vienen preparadas: no se usa Claude
+    $('#explRow').hidden = !S.sampler || !!S.pk;
+    $('#sumSet').hidden = !S.sampler || !!S.pk;
+  }
+  function unitText(u) {
+    const body = u.paras.filter(p => !p.note).map(p => p.text).join('\n');
+    if (u.type === 'heading') return `${u.label}${u.name ? '. ' + u.name : ''}${body ? '\n' + body : ''}`;
+    if (u.type === 'pre') return body ? 'Encabezado:\n' + body : '';
+    if (u.block) return body;
+    return `${u.raw || u.label} ${body}`.trim();
+  }
+  function rangeTitle(arts) {
+    if (!arts.length) return 'Lo leído';
+    if (arts.length === 1) return shortLabel(arts[0]);
+    const first = arts[0], last = arts[arts.length - 1];
+    if (first.block) return `${first.label} a ${last.label}`;
+    const s = u => u.trans && !/^Art/.test(u.label) ? u.label + ' transitorio' : u.label.replace(/^Artículo\s+/, '');
+    return `Artículos ${s(first)} a ${s(last)}`;
+  }
+  function buildPrompt(title, text) {
+    return `Eres un abogado mexicano que explica legislación con claridad a otros abogados.
+
+Abajo está el texto que se acaba de escuchar de «${S.law.name}» (${title}), con los títulos o capítulos que lo encabezan.
+
+Escribe una explicación breve de lo que establece ese texto, pensada para escucharse en voz alta justo después de leerlo:
+- Entre 60 y 130 palabras; menos si el texto es corto.
+- Español de México, tono profesional y claro.
+- Uno o dos párrafos de texto corrido, sin viñetas, títulos, negritas, asteriscos ni otros símbolos de formato.
+- Cuando te refieras a una regla concreta, di en qué artículo está.
+- Explica solo lo que dice el texto. No agregues reformas, jurisprudencia, opiniones ni datos que no aparezcan en él.
+- Empieza directamente con la explicación, sin saludos ni frases introductorias.
+
+TEXTO:
+"""
+${text}
+"""`;
+  }
+  const cleanAnswer = t => String(t || '').replace(/\*\*|__|^#+\s*/gm, '').replace(/^\s*[-•]\s+/gm, '');
+  function closeExplain() {
+    if (S.explCtl) { const c = S.explCtl; S.explCtl = null; try { c.abort(); } catch (e) {} }
+    stopSummary();
+    const old = document.getElementById('expl'); if (old) old.remove();
+  }
+  function showCard(title, afterIdx, units) {
+    const old = document.getElementById('expl'); if (old) old.remove();
+    const el = document.createElement('aside');
+    el.className = 'expl'; el.id = 'expl'; el.setAttribute('aria-label', 'Explicación de Claude');
+    el.innerHTML = `<div><div class="expl-k"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z" fill="currentColor"/></svg>Explicación de Claude</div><h3>${esc(title)}</h3></div>
+      <div class="expl-t wait">Claude está preparando la explicación</div>
+      <p class="expl-n err" data-msg hidden role="status"></p>
+      <p class="expl-n" data-info hidden></p>
+      <p class="expl-n">Se genera a partir del texto leído y puede omitir matices; verifica con los artículos.</p>
+      <div class="row"><button class="btn primary" data-act="listen" hidden>Escuchar</button><button class="btn" data-act="stop" hidden>Detener</button><button class="btn" data-act="retry" hidden>Intentar de nuevo</button><button class="btn ghost" data-act="regen" hidden>Generar de nuevo</button><button class="btn ghost" data-act="close">Cerrar</button></div>`;
+    const anchor = document.getElementById('u' + afterIdx);
+    if (anchor) anchor.after(el); else $('#doc').appendChild(el);
+    const card = {
+      el, units, title, text: '',
+      t: el.querySelector('.expl-t'),
+      msg(m) { const n = el.querySelector('[data-msg]'); n.textContent = m || ''; n.hidden = !m; },
+      info(m) { const n = el.querySelector('[data-info]'); n.textContent = m || ''; n.hidden = !m; },
+      ready() {
+        el.querySelector('[data-act="listen"]').hidden = !(synth && card.text);
+        el.querySelector('[data-act="retry"]').hidden = true;
+        el.querySelector('[data-act="regen"]').hidden = !(card.text && S.sampler);
+      },
+      retry(show) { el.querySelector('[data-act="retry"]').hidden = !show; }
+    };
+    el._card = card;
+    el.scrollIntoView({ block: 'nearest', behavior: reduced() ? 'auto' : 'smooth' });
+    return card;
+  }
+  function setCardSpeaking(on) {
+    const el = document.getElementById('expl'); if (!el || !el._card) return;
+    el.querySelector('[data-act="stop"]').hidden = !on;
+    el.querySelector('[data-act="listen"]').hidden = on || !(synth && el._card.text);
+  }
+  const EXPL_V = 1, DAY = 86400000;
+  async function explain(list, opts = {}) {
+    if (!S.sampler || !S.law) return;
+    if (S.playing) pause();
+    stopSummary();
+    if (S.explCtl) { try { S.explCtl.abort(); } catch (e) {} S.explCtl = null; }
+    const units = [...new Set(list)].sort((a, b) => a - b).map(i => S.units[i]).filter(Boolean);
+    S.read = new Set();
+    const MAX = 15000; let text = ''; const used = []; let cut = false;
+    for (const u of units) {
+      const piece = unitText(u); if (!piece) continue;
+      if (text.length + piece.length > MAX && used.length) { cut = true; break; }
+      text += (text ? '\n\n' : '') + piece.slice(0, MAX); used.push(u);
+    }
+    if (!used.length) { toast('No hay texto que explicar.'); return; }
+    const arts = used.filter(u => u.type === 'article');
+    const title = rangeTitle(arts);
+    const card = showCard(title, used[used.length - 1].i, used.map(u => u.i));
+    if (cut) card.msg(`Lo leído es muy extenso; la explicación llega hasta ${shortLabel(arts[arts.length - 1] || used[used.length - 1])}. Para explicar el resto, marca un rango más corto.`);
+    const key = `expl:${EXPL_V}:${S.law.id}:${JSON.stringify(rangesOf(new Set(used.map(u => u.i))))}`;
+    const saved = opts.force ? null : store.get(key, null);
+    if (saved && saved.text) {
+      card.text = saved.text; card.t.classList.remove('wait'); card.t.textContent = saved.text;
+      card.info('Explicación guardada en este navegador; mostrarla no gastó uso de Claude.');
+      card.ready();
+      if (S.settings.readSummary && !S.playing && synth) speakSummary(card.text, title);
+      return;
+    }
+    const ctl = new AbortController(); S.explCtl = ctl;
+    try {
+      const r = await S.sampler(buildPrompt(title, text), {
+        modelTier: 'quick',
+        cache: opts.force ? { gcTime: DAY, refresh: true } : { gcTime: DAY },
+        signal: ctl.signal,
+        onText: ({ text: t }) => { if (S.explCtl !== ctl) return; card.t.classList.remove('wait'); card.t.textContent = cleanAnswer(t); }
+      });
+      if (S.explCtl !== ctl) return;
+      S.explCtl = null;
+      card.text = cleanAnswer(r.text);
+      card.t.classList.remove('wait'); card.t.textContent = card.text;
+      if (r.truncated) card.msg('La explicación quedó incompleta. Marca un rango más corto para una explicación completa.');
+      else store.set(key, { text: card.text, at: Date.now() });
+      card.ready();
+      if (S.settings.readSummary && !S.playing && synth) speakSummary(card.text, title);
+    } catch (e) {
+      if (S.explCtl === ctl) S.explCtl = null;
+      sampleFailed(e, card);
+    }
+  }
+  function sampleFailed(e, card) {
+    const code = e && e.code;
+    if (code === 'cancelled') return;
+    card.t.classList.remove('wait');
+    if (['not_granted', 'sampling_disabled', 'not_declared', 'capability_disabled', 'capability_removed'].includes(code)) {
+      S.sampler = null; setExplainUI();
+      card.t.textContent = '';
+      card.msg(code === 'not_granted'
+        ? 'No se dio permiso para que esta página use Claude, así que no hay explicación. Se puede cambiar en los permisos de la página.'
+        : 'Claude no está disponible en esta página para esta cuenta.');
+      return;
+    }
+    const msgs = {
+      rate_limited: 'Se alcanzó el límite de uso de Claude por ahora. Inténtalo más tarde.',
+      session_expired: 'La sesión de Claude expiró. Vuelve a iniciar sesión e inténtalo de nuevo.',
+      refused: 'Claude no pudo explicar este texto.',
+      prompt_too_large: 'Lo leído es demasiado extenso. Marca un rango más corto.',
+      empty_completion: 'Claude no devolvió ninguna explicación. Prueba con un rango más corto.'
+    };
+    if (code === 'refused') card.t.textContent = '';
+    else if (e && e.text) { card.text = cleanAnswer(e.text); card.t.textContent = card.text; }
+    else card.t.textContent = '';
+    card.msg(msgs[code] || 'Se interrumpió la explicación. Puedes intentarlo de nuevo.');
+    card.ready();
+    card.retry(!['refused', 'prompt_too_large'].includes(code));
+  }
+  function speakSummary(text, title, given, k) {
+    if (!synth || !(text || given)) return;
+    if (S.playing) pause();
+    let chunks = given;
+    if (!chunks) { chunks = ['Explicación.']; LV.splitSentences(text).forEach(sen => LV.chunk(LV.speechify(sen, false)).forEach(c => chunks.push(c))); }
+    S.sum = { chunks, i: 0, playing: true, title, k: k || 0 };
+    const g = ++S.gen;
+    wake(true); updatePlayUI(); updateNow(); setCardSpeaking(true);
+    if (k) { markExpl(k, true); setExplBtns(); }
+    sumStep(g);
+  }
+  function sumStep(g) {
+    if (g !== S.gen || !S.sum || !S.sum.playing) return;
+    const c = S.sum.chunks[S.sum.i];
+    if (c == null) { S.sum.playing = false; wake(false); updatePlayUI(); updateNow(); setCardSpeaking(false); if (S.sum.k) { markExpl(0, false); setExplBtns(); } return; }
+    const u = makeUtt(c);
+    u.onend = () => { if (g === S.gen && S.sum) { S.sum.i++; sumStep(g); } };
+    u.onerror = e => { if (g !== S.gen || !S.sum || e.error === 'interrupted' || e.error === 'canceled') return; S.sum.i++; sumStep(g); };
+    sayUtt(u, g);
+  }
+  function stopSummary() {
+    if (S.sum && S.sum.audio) {
+      S.sum.playing = false;
+      if (A.mode === 'solo') { try { AUD.pause(); } catch (e) {} A.mode = 'track'; A.k = 0; }
+      if (!S.inExpl && A.mode !== 'expl') markExpl(0, false);
+    } else if (S.sum && S.sum.playing) {
+      S.sum.playing = false; S.gen++;
+      if (synth) synth.cancel();
+      if (!S.playing) wake(false);
+      if (S.sum.k) markExpl(0, false);
+    }
+    setCardSpeaking(false); setExplBtns(); updatePlayUI(); updateNow();
+  }
+  $('#doc').addEventListener('click', e => {
+    const x = e.target.closest('[data-exlisten]'); if (x) { playExplSolo(+x.dataset.exlisten); return; }
+    const b = e.target.closest('#expl [data-act]'); if (!b) return;
+    const card = document.getElementById('expl')._card;
+    const act = b.dataset.act;
+    if (act === 'listen') speakSummary(card.text, card.title);
+    else if (act === 'stop') stopSummary();
+    else if (act === 'retry') explain(card.units);
+    else if (act === 'regen') explain(card.units, { force: true });
+    else if (act === 'close') closeExplain();
+  });
+  $('#btnExplain').addEventListener('click', () => {
+    const list = S.read.size ? [...S.read] : S.queue.slice();
+    if (!list.length) { toast('Marca o escucha algunos artículos para que Claude los explique.'); return; }
+    closeSide();
+    explain(list);
+  });
+  $('#autoSum').addEventListener('change', e => { S.settings.autoSummary = e.target.checked; saveSettings(); });
+  $('#readSum').addEventListener('change', e => { S.settings.readSummary = e.target.checked; saveSettings(); });
+  (async () => {
+    try {
+      if (window.claude && typeof window.claude.use === 'function') {
+        const fn = await window.claude.use('sample');
+        if (typeof fn === 'function') { S.sampler = fn; setExplainUI(); }
+      }
+    } catch (e) {}
+  })();
+
+  /* ---------- Biblioteca: panel ---------- */
+  async function renderLaws() {
+    if (APP) return renderLawsApp();
+    const list = (await DB.all()).filter(l => !String(l.id).startsWith('pack:')).sort((a, b) => b.added - a.added);
+    const all = PACKS.map(p => ({ id: p.id, name: p.name, builtin: true, meta: p.meta })).concat([{ id: 'instructivo', name: 'Instructivo del lector', builtin: true, meta: 'Ejemplo de uso' }], list);
+    $('#lawsList').innerHTML = all.map(l => {
+      const cur = S.law && S.law.id === l.id;
+      const meta = l.builtin ? l.meta : `${l.arts ?? '—'} artículos · agregada el ${new Date(l.added).toLocaleDateString('es-MX', { day: 'numeric', month: 'short', year: 'numeric' })}`;
+      return `<li data-id="${esc(l.id)}"${cur ? ' class="cur"' : ''}><div class="info"><button data-open="${esc(l.id)}">${esc(l.name)}</button><div class="meta">${cur ? 'Abierta · ' : ''}${meta}</div></div>${l.builtin ? '' : `<div class="acts"><button class="btn ghost" data-ren="${esc(l.id)}">Renombrar</button><button class="btn ghost danger" data-del="${esc(l.id)}">Eliminar</button></div>`}</li>`;
+    }).join('');
+  }
+  let lastFocus = null;
+  function openPanel(focusAdd) {
+    lastFocus = document.activeElement;
+    $('#panel').hidden = false; renderLaws();
+    setTimeout(() => { (focusAdd ? $('#file') : $('#btnClosePanel')).focus(); if (focusAdd) $('#addSec').scrollIntoView({ block: 'nearest' }); }, 30);
+  }
+  function closePanel() { $('#panel').hidden = true; if (lastFocus && lastFocus.focus) lastFocus.focus(); }
+  async function openById(id) {
+    if (id === 'instructivo') { openLaw(builtinLaw(), { scrollToCur: true }); return true; }
+    if (APP) { const e = CATALOG.find(x => x.id === id); return e ? openRemote(e) : false; }
+    const pk = PACKS.find(p => p.id === id);
+    if (pk) { openLaw(packLaw(pk), { scrollToCur: true }); return true; }
+    const l = await DB.get(id); if (!l) { toast('No se encontró esa ley en este navegador.'); return false; }
+    openLaw(l, { scrollToCur: true }); return true;
+  }
+  const builtinLaw = () => ({ id: 'instructivo', name: APP ? 'Cómo usar la app' : 'Instructivo del lector', text: INSTRUCTIVO, builtin: true });
+  const packLaw = p => ({ id: p.id, name: p.name, text: p.text, builtin: true, pack: p });
+  const defaultLaw = () => PACKS.length ? packLaw(PACKS[0]) : builtinLaw();
+
+  /* ---------- App: catálogo de leyes en GitHub y descargas ---------- */
+  let CATALOG = APP ? store.get('catalog', []) : [];
+  let APPINFO = APP ? store.get('appinfo', null) : null;
+  const DL = { id: null, done: 0, total: 0, cancel: false, err: '' };
+  async function refreshCatalog() {
+    if (!APP) return false;
+    try {
+      const r = await fetch(REMOTE.base + REMOTE.catalog + '?t=' + Date.now(), { cache: 'no-store' });
+      if (!r.ok) throw new Error('http ' + r.status);
+      const j = await r.json();
+      if (Array.isArray(j.leyes)) { CATALOG = j.leyes; store.set('catalog', CATALOG); }
+      if (j.app) { APPINFO = j.app; store.set('appinfo', APPINFO); }
+      // borrar audio descargado de versiones anteriores de cada ley
+      try {
+        const names = await caches.keys();
+        for (const n of names) {
+          const m = n.match(/^audio:(.+):(\d+)$/); if (!m) continue;
+          const e = CATALOG.find(x => x.id === m[1]);
+          if (e && String(e.v) !== m[2]) await caches.delete(n);
+        }
+      } catch (e) {}
+      return true;
+    } catch (e) { return false; }
+  }
+  const withBase = (data, entry) => Object.assign(data, { id: entry.id, v: entry.v, audioBase: REMOTE.base + entry.audio });
+  async function getPack(entry) {
+    const key = 'pack:' + entry.id;
+    const cached = await DB.get(key);
+    if (cached && cached.v === entry.v && cached.data) return withBase(cached.data, entry);
+    const r = await fetch(REMOTE.base + entry.pack + '?v=' + entry.v, { cache: 'no-store' });
+    if (!r.ok) throw new Error('http ' + r.status);
+    const data = await r.json();
+    await DB.put({ id: key, v: entry.v, data });
+    return withBase(data, entry);
+  }
+  async function openRemote(entry, quiet) {
+    if (!quiet) toast('Abriendo ' + entry.name + '…', 3000);
+    let data;
+    try { data = await getPack(entry); }
+    catch (e) {
+      const old = await DB.get('pack:' + entry.id);
+      if (old && old.data) data = withBase(old.data, Object.assign({}, entry, { v: old.v }));
+      else { if (!quiet) toast('No se pudo descargar la ley. Revisa tu conexión a internet.'); return false; }
+    }
+    openLaw(packLaw(data), { scrollToCur: true });
+    return true;
+  }
+  async function dlHave(entry) {
+    try { return (await (await caches.open(audioCacheName(entry))).keys()).length; } catch (e) { return 0; }
+  }
+  async function downloadPack(entry) {
+    if (DL.id) return;
+    Object.assign(DL, { id: entry.id, done: 0, total: entry.files || 0, cancel: false, err: '' });
+    renderLaws();
+    try {
+      const data = await getPack(entry);
+      const names = audioNames(data);
+      DL.total = names.length;
+      const c = await caches.open(audioCacheName(data));
+      const have = new Set((await c.keys()).map(r => r.url));
+      let lastUI = 0;
+      for (const n of names) {
+        if (DL.cancel) break;
+        const url = data.audioBase + n;
+        if (!have.has(url)) {
+          let ok = false;
+          for (let t = 0; t < 3 && !ok && !DL.cancel; t++) {
+            try { const res = await fetch(url, { cache: 'no-store' }); if (res.ok) { await c.put(url, res); ok = true; } } catch (e) {}
+          }
+          if (!ok && !DL.cancel) throw new Error('red');
+        }
+        DL.done++;
+        if (S.pk && S.pk.pack.id === entry.id) (S.pk.local || (S.pk.local = new Set())).add(n);
+        if (Date.now() - lastUI > 400) { lastUI = Date.now(); renderLaws(); }
+      }
+      if (!DL.cancel) toast(`«${entry.name}» quedó descargada: ya se puede escuchar sin internet.`, 6000);
+    } catch (e) {
+      DL.err = 'Se interrumpió la descarga. Revisa tu conexión y vuelve a oprimir «Continuar descarga»: sigue donde se quedó.';
+    }
+    DL.id = null; renderLaws();
+  }
+  async function deleteDownload(entry) {
+    if (S.playing && S.pk && S.pk.pack.id === entry.id) pause();
+    try { await caches.delete(audioCacheName(entry)); } catch (e) {}
+    if (S.pk && S.pk.pack.id === entry.id) { S.pk.local = new Set(); A.lastU = -1; A.k = 0; }
+    blobs.forEach(u => URL.revokeObjectURL(u)); blobs.clear();
+    renderLaws(); toast('Se borró el audio descargado de esta ley.');
+  }
+  async function renderLawsApp() {
+    const items = [];
+    for (const e of CATALOG) {
+      const cur = S.law && S.law.id === e.id;
+      let st;
+      if (DL.id === e.id) {
+        const pct = DL.total ? (DL.done / DL.total * 100).toFixed(1) : 0;
+        st = `<div class="dl"><span class="meta">Descargando: ${DL.done} de ${DL.total || '…'} archivos</span><div class="prog"><i style="width:${pct}%"></i></div><button class="btn ghost" data-dlcancel="${esc(e.id)}">Pausar descarga</button></div>`;
+      } else {
+        const have = await dlHave(e), total = e.files || 0;
+        st = total && have >= total
+          ? `<div class="dl"><span class="meta">Descargada: se escucha sin internet</span><button class="btn ghost danger" data-dldel="${esc(e.id)}">Borrar descarga</button></div>`
+          : `<div class="dl">${have ? `<span class="meta">Descarga a medias: ${have} de ${total} archivos</span>` : ''}<button class="btn${have ? ' primary' : ''}" data-dl="${esc(e.id)}">${have ? 'Continuar descarga' : 'Descargar para escuchar sin internet'}${e.mb ? ` · ${e.mb} MB` : ''}</button></div>`;
+      }
+      items.push(`<li data-id="${esc(e.id)}"${cur ? ' class="cur"' : ''}><div class="info"><button data-open="${esc(e.id)}">${esc(e.name)}</button><div class="meta">${cur ? 'Abierta · ' : ''}${esc(e.meta || '')}</div></div>${st}</li>`);
+    }
+    if (!CATALOG.length) items.push('<li><div class="info"><div class="meta">Aún no se descarga la lista de leyes. Conéctate a internet y vuelve a abrir la app.</div></div></li>');
+    items.push(`<li data-id="instructivo"${S.law && S.law.id === 'instructivo' ? ' class="cur"' : ''}><div class="info"><button data-open="instructivo">Cómo usar la app</button><div class="meta">Instructivo</div></div></li>`);
+    $('#lawsList').innerHTML = items.join('');
+    let note = document.getElementById('appNote');
+    if (!note) { note = document.createElement('div'); note.id = 'appNote'; note.className = 'appnote'; $('#lawsList').after(note); }
+    const upd = APPINFO && APPINFO.version && APPINFO.version !== APP_VERSION && APPINFO.url
+      ? `<p class="appnote"><b>Hay una versión nueva de la app (${esc(APPINFO.version)}).</b> <a href="${esc(APPINFO.url)}" target="_blank" rel="noopener">Descargarla</a></p>` : '';
+    note.innerHTML = (DL.err ? `<p class="appnote" style="color:var(--danger)">${esc(DL.err)}</p>` : '') + upd +
+      `<p class="appnote">Sin descargar, el audio se escucha por internet (unos 15 MB por hora). Las leyes nuevas aparecen en esta lista cuando se publican, sin reinstalar la app. Versión ${esc(APP_VERSION || '')}.</p>`;
+  }
+
+  /* ---------- Carga de archivos ---------- */
+  let pending = null; // {file}
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script'); s.src = src; s.async = true;
+      s.onload = res; s.onerror = () => rej(new Error('No se pudo descargar el lector de archivos. Revisa tu conexión a internet.'));
+      document.head.appendChild(s);
+    });
+  }
+  async function pdfToText(buf, onProg) {
+    if (!window.pdfjsLib) await loadScript(PDFJS);
+    const lib = window.pdfjsLib;
+    let usedPort = false;
+    try {
+      if (!lib.GlobalWorkerOptions.workerPort) {
+        const blob = new Blob([`importScripts(${JSON.stringify(PDFW)});`], { type: 'text/javascript' });
+        lib.GlobalWorkerOptions.workerPort = new Worker(URL.createObjectURL(blob));
+      }
+      usedPort = true;
+    } catch (e) { lib.GlobalWorkerOptions.workerSrc = PDFW; }
+    let pdf;
+    try { pdf = await lib.getDocument({ data: new Uint8Array(buf.slice(0)), isEvalSupported: false }).promise; }
+    catch (e) {
+      if (!usedPort || /password/i.test(e && e.name || '')) throw e;
+      lib.GlobalWorkerOptions.workerPort = null; lib.GlobalWorkerOptions.workerSrc = PDFW;
+      pdf = await lib.getDocument({ data: new Uint8Array(buf.slice(0)), isEvalSupported: false }).promise;
+    }
+    const pages = [];
+    for (let p = 1; p <= pdf.numPages; p++) {
+      onProg && onProg(p, pdf.numPages);
+      const page = await pdf.getPage(p);
+      const tc = await page.getTextContent();
+      pages.push(itemsToLines(tc.items));
+      page.cleanup();
+    }
+    return LV.cleanPages(pages);
+  }
+  function itemsToLines(items) {
+    const lines = []; let line = '', lastY = null, lastEnd = null;
+    const flush = () => { if (line.trim()) lines.push(line.replace(/\s+/g, ' ').trim()); line = ''; lastEnd = null; };
+    for (const it of items) {
+      if (!it || typeof it.str !== 'string') continue;
+      const y = it.transform[5], x = it.transform[4];
+      if (it.str) {
+        if (lastY !== null && Math.abs(y - lastY) > 2.5) flush();
+        if (line && lastEnd !== null && x - lastEnd > 1.2 && !/\s$/.test(line) && !/^\s/.test(it.str)) line += ' ';
+        line += it.str; lastEnd = x + (it.width || 0); lastY = y;
+      }
+      if (it.hasEOL) { flush(); lastY = null; }
+    }
+    flush();
+    return lines;
+  }
+  async function fileToText(file, onProg) {
+    const name = file.name.toLowerCase();
+    const buf = await file.arrayBuffer();
+    if (name.endsWith('.pdf') || file.type === 'application/pdf') return pdfToText(buf, onProg);
+    if (name.endsWith('.docx')) {
+      if (!window.mammoth) await loadScript(MAMMOTH);
+      const r = await window.mammoth.extractRawText({ arrayBuffer: buf });
+      return r.value;
+    }
+    if (name.endsWith('.doc')) throw new Error('Los archivos .doc antiguos no se pueden leer. Ábrelo en Word y guárdalo como .docx, o usa el PDF.');
+    let txt = new TextDecoder('utf-8').decode(buf);
+    if ((txt.match(/\uFFFD/g) || []).length > 5) txt = new TextDecoder('windows-1252').decode(buf);
+    if (name.endsWith('.htm') || name.endsWith('.html')) {
+      const html = txt.replace(/<(script|style)[\s\S]*?<\/\1>/gi, '').replace(/<\/(p|div|h[1-6]|li|tr|table|section|article)\s*>|<br\s*\/?>/gi, '$&\n\n');
+      const d = new DOMParser().parseFromString(html, 'text/html');
+      txt = d.body ? d.body.textContent : '';
+    }
+    return txt;
+  }
+  function niceName(fname) {
+    const base = fname.replace(/\.[^.]+$/, '');
+    const k = KNOWN[base.toLowerCase()];
+    if (k) return k;
+    return base.replace(/[_]+/g, ' ').replace(/\s+/g, ' ').trim();
+  }
+  function setStatus(msg, err) { const s = $('#loadStatus'); s.textContent = msg; s.classList.toggle('err', !!err); }
+  function refreshLoadBtn() { $('#btnLoad').disabled = !(pending || $('#paste').value.trim().length > 20); }
+  function pickFile(f) {
+    if (!f) return;
+    pending = f;
+    $('#drop').classList.add('has'); $('#dropT').textContent = f.name;
+    if (!$('#newName').value.trim()) $('#newName').value = niceName(f.name);
+    setStatus(''); refreshLoadBtn();
+  }
+  async function doLoad() {
+    const btn = $('#btnLoad'); btn.disabled = true;
+    try {
+      let text = '', name = $('#newName').value.trim();
+      if (pending) {
+        setStatus('Leyendo el archivo…');
+        text = await fileToText(pending, (p, n) => setStatus(`Leyendo página ${p} de ${n}…`));
+        if (!name) name = niceName(pending.name);
+      } else {
+        text = $('#paste').value;
+        if (!name) name = 'Ley pegada';
+      }
+      if (text.replace(/\s/g, '').length < 150) throw new Error('No encontré texto que leer. Si es un PDF escaneado como imagen, busca la versión con texto (por ejemplo, la de la Cámara de Diputados) o pega el texto.');
+      setStatus('Ordenando títulos, capítulos y artículos…');
+      await new Promise(r => setTimeout(r, 20));
+      const clean = LV.toParagraphs(text).join('\n\n');
+      const parsed = LV.parseLaw(clean);
+      const law = { id: 'l' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6), name, text: clean, added: Date.now(), arts: parsed.articles };
+      const ok = await DB.put(law);
+      pending = null; $('#file').value = ''; $('#paste').value = ''; $('#newName').value = '';
+      $('#drop').classList.remove('has'); $('#dropT').textContent = 'Elige un archivo o arrástralo aquí';
+      setStatus('');
+      closePanel();
+      openLaw(law);
+      const blocks = parsed.units.some(u => u.block);
+      toast(blocks
+        ? `«${name}» se cargó, pero no encontré artículos con el formato «Artículo 1.-». Se dividió en ${parsed.articles} bloques para leerla.`
+        : `«${name}» se cargó: ${parsed.articles} artículos${parsed.headings ? ' y ' + parsed.headings + ' títulos y capítulos' : ''}.${ok ? '' : ' Este navegador no permite guardarla; se perderá al cerrar la página.'}`, 7000);
+    } catch (e) {
+      setStatus((e && e.message) ? e.message : 'No se pudo leer el archivo.', true);
+    } finally { refreshLoadBtn(); }
+  }
+
+  /* ---------- Eventos ---------- */
+  $('#btnPlay').addEventListener('click', togglePlay);
+  $('#btnNext').addEventListener('click', () => jump(1));
+  $('#btnPrev').addEventListener('click', () => jump(-1));
+  $('#rate').addEventListener('change', e => {
+    S.settings.rate = parseFloat(e.target.value) || 1; saveSettings();
+    AUD.defaultPlaybackRate = AUD.playbackRate = S.settings.rate;
+    updateSelUI(); updateNow();
+    if (S.playing && !audioMode()) speakSeg();
+  });
+  $('#voice').addEventListener('change', e => { S.settings.voice = e.target.value; saveSettings(); if (S.playing && !audioMode()) speakSeg(); });
+  $('#after').addEventListener('change', e => { S.settings.after = e.target.value; saveSettings(); });
+  $('#sleep').addEventListener('change', e => {
+    const m = +e.target.value; S.sleepAt = m ? Date.now() + m * 60000 : 0;
+    updateNow(); if (m) toast(`La lectura se detendrá en ${fmtDur(m * 60, true)}.`);
+  });
+  function resegment() {
+    const old = S.segs[S.cur.seg];
+    computeQueue(); updateSelUI();
+    if (S.cur.u >= 0 && !audioMode()) {
+      loadSegs();
+      const k = old ? S.segs.findIndex(x => x.p === old.p && x.s === old.s) : 0;
+      S.cur.seg = Math.max(0, k);
+      if (S.playing && !S.inExpl) speakSeg();
+    }
+    applyOffClasses(); updateNow();
+  }
+  $('#skipNotes').addEventListener('change', e => { S.settings.skipNotes = e.target.checked; saveSettings(); resegment(); });
+  $('#readHeads').addEventListener('change', e => { S.settings.readHeadings = e.target.checked; saveSettings(); resegment(); });
+  $('#natVoice').addEventListener('change', e => {
+    if (S.playing) pause();
+    stopSummary(); clearExpl();
+    S.settings.naturalVoice = e.target.checked; saveSettings();
+    A.mode = 'track'; A.k = 0; A.lastU = -1;
+    try { AUD.pause(); } catch (err) {}
+    loadSegs(); S.cur.seg = 0;
+    computeQueue(); updateSelUI(); applyModeUI(); renderDoc(); if (S.cur.u >= 0) markActive(S.cur.u); updateNow();
+    toast(e.target.checked ? 'Se usará la voz natural grabada.' : 'Se usará la voz del equipo.');
+  });
+  $('#temaExpl').addEventListener('change', e => { S.settings.temaExpl = e.target.checked; saveSettings(); });
+  $('#tema').addEventListener('change', e => {
+    const r = S.pk && S.pk.byK.get(+e.target.value); if (!r) return;
+    const hits = []; for (let i = r.from; i <= r.to; i++) if (S.units[i].type === 'article') hits.push(i);
+    S.sel = new Set(hits); selectionChanged();
+    const tr = S.pk.pack.tracks.find(t => t.range === r.k);
+    const first = tr && tr.t.length ? tr.t[0][0] : hits[0];
+    S.cur = { u: first, seg: 0 }; S.resumable = false; S.follow = true;
+    resumeAt();
+    closeSide(); scrollToUnit(first, 'start');
+    toast(`Tema ${r.k}: ${r.title}. ${S.playing ? '' : 'Oprime reproducir para escucharlo.'}`, 6000);
+    e.target.value = '';
+  });
+
+  $('#selAll').addEventListener('click', () => { S.sel = new Set(S.units.filter(u => u.type === 'article').map(u => u.i)); selectionChanged(); });
+  $('#selNone').addEventListener('click', () => { S.sel = new Set(); selectionChanged(); });
+  $('#rangeForm').addEventListener('submit', e => {
+    e.preventDefault();
+    let a = parseInt($('#rFrom').value, 10), b = parseInt($('#rTo').value, 10);
+    if (isNaN(a) && isNaN(b)) { toast('Escribe el número del primer y del último artículo.'); return; }
+    if (isNaN(a)) a = b; if (isNaN(b)) b = a; if (a > b) [a, b] = [b, a];
+    const hits = S.units.filter(u => u.type === 'article' && !u.trans && u.num != null && u.num >= a && u.num <= b).map(u => u.i);
+    if (!hits.length) { toast(`No hay artículos del ${a} al ${b} en esta ley.`); return; }
+    S.sel = new Set(hits); selectionChanged();
+    S.cur = { u: hits[0], seg: 0 }; S.resumable = false;
+    resumeAt();
+    scrollToUnit(hits[0], 'start');
+    toast(`Marcados ${hits.length} artículos: del ${a} al ${b}.`);
+  });
+
+  $('#ix').addEventListener('click', e => {
+    const tog = e.target.closest('[data-tog]');
+    if (tog) {
+      const i = +tog.dataset.tog, c = document.querySelector(`#ix [data-c="${i}"]`);
+      const open = c.hidden; c.hidden = !open; tog.setAttribute('aria-expanded', String(open));
+      open ? S.openH.add(i) : S.openH.delete(i); return;
+    }
+    const go = e.target.closest('[data-go]');
+    if (go) {
+      const i = +go.dataset.go; S.follow = false;
+      if (S.playing) $('#backPill').hidden = false;
+      scrollToUnit(i, 'start'); closeSide();
+    }
+  });
+  $('#ix').addEventListener('change', e => {
+    const cb = e.target.closest('input[data-ck]'); if (!cb) return;
+    const u = S.units[+cb.dataset.ck];
+    if (u.type === 'heading') { for (let j = u.i + 1; j < u.end; j++) if (isSelectable(S.units[j])) cb.checked ? S.sel.add(j) : S.sel.delete(j); }
+    else cb.checked ? S.sel.add(u.i) : S.sel.delete(u.i);
+    selectionChanged();
+  });
+  let qT = 0;
+  $('#q').addEventListener('input', e => { clearTimeout(qT); qT = setTimeout(() => { S.searchQ = e.target.value.trim(); renderIndex(); }, 180); });
+
+  $('#doc').addEventListener('click', e => { const b = e.target.closest('[data-play]'); if (b) startAt(+b.dataset.play); });
+  const reader = $('#reader');
+  const userScroll = () => { if (S.playing && S.follow) { S.follow = false; $('#backPill').hidden = false; } };
+  reader.addEventListener('wheel', userScroll, { passive: true });
+  reader.addEventListener('touchmove', userScroll, { passive: true });
+  reader.addEventListener('keydown', e => { if (['PageUp', 'PageDown', 'ArrowUp', 'ArrowDown', 'Home', 'End'].includes(e.key)) userScroll(); });
+  $('#backPill').addEventListener('click', () => { S.follow = true; $('#backPill').hidden = true; highlight(); });
+
+  const side = $('#side'), scrim = $('#scrim');
+  function openSide() { side.classList.add('open'); scrim.classList.add('show'); $('#btnIndex').setAttribute('aria-expanded', 'true'); }
+  function closeSide() { if (!side.classList.contains('open')) return; side.classList.remove('open'); scrim.classList.remove('show'); $('#btnIndex').setAttribute('aria-expanded', 'false'); }
+  $('#btnIndex').addEventListener('click', openSide);
+  $('#btnCloseSide').addEventListener('click', closeSide);
+  scrim.addEventListener('click', closeSide);
+
+  $('#btnLaws').addEventListener('click', () => openPanel(false));
+  $('#btnAdd').addEventListener('click', () => openPanel(true));
+  $('#btnClosePanel').addEventListener('click', closePanel);
+  $('#panel').addEventListener('click', e => { if (e.target.id === 'panel') closePanel(); });
+  $('#lawsList').addEventListener('click', async e => {
+    if (APP) {
+      const d = e.target.closest('[data-dl]'); if (d) { const en = CATALOG.find(x => x.id === d.dataset.dl); if (en) downloadPack(en); return; }
+      if (e.target.closest('[data-dlcancel]')) { DL.cancel = true; return; }
+      const x = e.target.closest('[data-dldel]'); if (x) { const en = CATALOG.find(y => y.id === x.dataset.dldel); if (en) deleteDownload(en); return; }
+    }
+    const o = e.target.closest('[data-open]');
+    if (o) { if (await openById(o.dataset.open)) closePanel(); return; }
+    const r = e.target.closest('[data-ren]');
+    if (r) {
+      const li = r.closest('li'), id = r.dataset.ren, info = li.querySelector('.info');
+      const curName = info.querySelector('button').textContent;
+      info.innerHTML = `<label class="vh" for="ren-${esc(id)}">Nuevo nombre</label><input id="ren-${esc(id)}" value="${esc(curName)}">`;
+      r.outerHTML = `<button class="btn primary" data-save="${esc(id)}">Guardar</button>`;
+      const inp = info.querySelector('input'); inp.focus(); inp.select();
+      inp.addEventListener('keydown', ev => { if (ev.key === 'Enter') li.querySelector('[data-save]').click(); });
+      return;
+    }
+    const sv = e.target.closest('[data-save]');
+    if (sv) {
+      const id = sv.dataset.save, val = sv.closest('li').querySelector('input').value.trim();
+      const l = await DB.get(id);
+      if (l && val) { l.name = val; await DB.put(l); if (S.law && S.law.id === id) { S.law.name = val; $('#lawName').textContent = val; const h = document.querySelector('.doctitle'); if (h) h.textContent = val; updateNow(); } }
+      renderLaws(); return;
+    }
+    const d = e.target.closest('[data-del]');
+    if (d) {
+      const acts = d.closest('.acts'), id = d.dataset.del;
+      acts.innerHTML = `<span class="meta">¿Eliminarla?</span><button class="btn danger" data-delok="${esc(id)}">Sí, eliminar</button><button class="btn ghost" data-delno="1">No</button>`;
+      return;
+    }
+    const ok = e.target.closest('[data-delok]');
+    if (ok) {
+      const id = ok.dataset.delok; await DB.del(id); store.del('sel:' + id); store.del('pos:' + id);
+      if (S.law && S.law.id === id) openLaw(defaultLaw());
+      renderLaws(); toast('Se eliminó la ley de este navegador.'); return;
+    }
+    if (e.target.closest('[data-delno]')) renderLaws();
+  });
+
+  const drop = $('#drop');
+  $('#file').addEventListener('change', e => pickFile(e.target.files && e.target.files[0]));
+  ['dragenter', 'dragover'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.add('over'); }));
+  ['dragleave', 'drop'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.remove('over'); }));
+  drop.addEventListener('drop', e => pickFile(e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]));
+  $('#paste').addEventListener('input', () => { if ($('#paste').value.trim()) { pending = null; $('#drop').classList.remove('has'); $('#dropT').textContent = 'Elige un archivo o arrástralo aquí'; } refreshLoadBtn(); });
+  $('#btnLoad').addEventListener('click', doLoad);
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { if (!$('#panel').hidden) closePanel(); else closeSide(); return; }
+    const tag = (e.target.tagName || '').toLowerCase();
+    if (['input', 'textarea', 'select'].includes(tag) || e.target.isContentEditable || !$('#panel').hidden) return;
+    if (e.key === ' ' && tag !== 'button') { e.preventDefault(); togglePlay(); }
+    else if (e.key === 'ArrowRight' && !e.altKey) { e.preventDefault(); jump(1); }
+    else if (e.key === 'ArrowLeft' && !e.altKey) { e.preventDefault(); jump(-1); }
+  });
+  window.addEventListener('pagehide', () => { if (synth) synth.cancel(); savePos(); });
+
+  if (/[?&]debug\b/.test(location.search)) window.__lev = { S, A, AUD };
+
+  /* ---------- Inicio ---------- */
+  $('#rate').value = String(S.settings.rate);
+  if (!$('#rate').value) { $('#rate').value = '1'; S.settings.rate = 1; }
+  $('#after').value = S.settings.after;
+  $('#skipNotes').checked = !!S.settings.skipNotes;
+  $('#readHeads').checked = S.settings.readHeadings !== false;
+  $('#autoSum').checked = S.settings.autoSummary !== false;
+  $('#readSum').checked = S.settings.readSummary !== false;
+  $('#temaExpl').checked = S.settings.temaExpl !== false;
+  AUD.defaultPlaybackRate = AUD.playbackRate = S.settings.rate;
+  if (synth) {
+    loadVoices();
+    if ('onvoiceschanged' in synth) synth.addEventListener ? synth.addEventListener('voiceschanged', loadVoices) : (synth.onvoiceschanged = loadVoices);
+    let tries = 0; const iv = setInterval(() => { if (voices.length || ++tries > 10) { clearInterval(iv); return; } loadVoices(); }, 400);
+  } else renderVoices();
+  updatePlayUI();
+
+  (async () => {
+    if (APP) {
+      document.documentElement.classList.add('app');
+      $('#panelTitle').textContent = 'Leyes disponibles';
+      const last = store.get('last', null);
+      let refreshed = false;
+      if (!CATALOG.length) refreshed = await refreshCatalog();
+      const e = last === 'instructivo' ? null : (CATALOG.find(x => x.id === last) || CATALOG[0]);
+      if (!(e && await openRemote(e, true))) {
+        openLaw(builtinLaw());
+        if (!CATALOG.length) toast('Conéctate a internet para descargar la lista de leyes.', 8000);
+      }
+      if (!refreshed) {
+        const before = JSON.stringify(CATALOG);
+        if (await refreshCatalog() && JSON.stringify(CATALOG) !== before && S.law && !S.playing) {
+          const ne = CATALOG.find(x => x.id === S.law.id);
+          if (ne && S.pk && ne.v !== S.pk.pack.v) { await openRemote(ne, true); toast('Se actualizó el texto de la ley.'); }
+          else if (!S.pk && CATALOG.length && S.law.id === 'instructivo' && last !== 'instructivo') await openRemote(CATALOG[0], true);
+        }
+      }
+      if (APPINFO && APPINFO.version && APPINFO.version !== APP_VERSION) toast(`Hay una versión nueva de la app (${APPINFO.version}). Está en la lista de leyes.`, 8000);
+      return;
+    }
+    const last = store.get('last', null);
+    // la primera vez se abre la ley integrada, aunque antes se haya usado otra
+    const fresh = PACKS.length && !store.get('seen:' + PACKS[0].id, false);
+    if (PACKS.length) store.set('seen:' + PACKS[0].id, true);
+    if (!fresh && last && last !== 'instructivo' && !PACKS.some(p => p.id === last)) {
+      const l = await DB.get(last); if (l) { openLaw(l, { scrollToCur: true }); return; }
+    }
+    if (!fresh && last === 'instructivo') { openLaw(builtinLaw(), { scrollToCur: true }); return; }
+    const pk = PACKS.find(p => p.id === last) || PACKS[0];
+    openLaw(pk ? packLaw(pk) : builtinLaw(), { scrollToCur: true });
+  })();
+})();
+</script>

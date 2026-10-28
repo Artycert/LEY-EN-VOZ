@@ -1,0 +1,65 @@
+TÍTULO PRIMERO
+
+Disposiciones generales
+
+CAPÍTULO I
+
+Del objeto
+
+Artículo 1o.- Este lector sirve para escuchar leyes, códigos y reglamentos en voz alta, completos o por partes, mientras se realizan otras actividades.
+
+Artículo 2o.- Para cargar una ley se usa el botón «Cargar ley», que admite:
+
+I. Archivos PDF con texto, como los que publica la Cámara de Diputados;
+
+II. Documentos de Word en formato .docx;
+
+III. Archivos de texto, y
+
+IV. Texto copiado y pegado desde cualquier página.
+
+Artículo 3o.- Las leyes cargadas se guardan solo en el navegador de quien las carga y aparecen en la lista de leyes. El archivo no se envía a ningún servidor.
+
+CAPÍTULO II
+
+De la selección
+
+Artículo 4o.- En el índice se marcan los títulos, capítulos o artículos que se desean escuchar. Marcar un título o un capítulo marca todos sus artículos.
+
+Artículo 5o.- Para escuchar un rango se escriben el primero y el último artículo en los campos «Del» y «al», y se oprime «Marcar rango». Por ejemplo, del artículo 4 al 6.
+
+Artículo 6o.- El botón de reproducir que aparece junto a cada artículo inicia la lectura desde ese punto, aunque el artículo no esté marcado.
+
+TÍTULO SEGUNDO
+
+De la lectura
+
+Artículo 7o.- La velocidad puede ajustarse entre 0.75 y 2 veces. La voz depende del equipo; en Windows y en Android suele haber voces en español de México, y en Edge hay voces naturales que suenan mejor.
+
+Artículo 8o.- Al terminar cada artículo, el lector puede:
+
+a) Seguir con el siguiente artículo marcado;
+
+b) Pausar, para repasar con calma, o
+
+c) Repetir el mismo artículo, para memorizarlo.
+
+Artículo 9o.- Las abreviaturas usuales se leen completas. Así, «Art. 27 fracc. VII» se escucha como artículo 27, fracción 7, y «DOF» como Diario Oficial de la Federación.
+
+Artículo 10.- Las notas de reforma, como la que aparece debajo de este artículo, se muestran en gris y no se leen, salvo que se desactive la opción «Omitir notas de reforma».
+
+Artículo reformado DOF 27-10-2026
+
+Artículo 11.- El lector recuerda en qué artículo se quedó cada ley, para continuar ahí al volver a abrirla.
+
+Artículo 12.- En el celular, con la voz del equipo, la lectura se detiene si la pantalla se apaga; mientras se escucha, el lector pide mantenerla encendida, y conviene bajar el brillo. Con la voz natural grabada de las leyes integradas, el audio sigue sonando con la pantalla apagada y se puede pausar desde la pantalla de bloqueo o los audífonos. En la computadora normalmente sigue leyendo aunque se cambie de ventana.
+
+Artículo 13.- En las leyes que carga cada quien, al terminar de escuchar lo marcado, el lector puede pedir a Claude una explicación breve de lo que se leyó y leerla en voz alta. También puede pedirse en cualquier momento con el botón «Explicar con Claude». La explicación usa la cuenta de Claude de quien abre la página, que la primera vez debe dar permiso, y no sustituye la lectura del texto. Para gastar poco, usa el modelo ligero de Claude y cada explicación se guarda en el navegador, de modo que volver a pedir la misma no gasta uso.
+
+Artículo 14.- Las leyes integradas, como la Ley de Instituciones y Procedimientos Electorales del Estado de Campeche, traen la lectura grabada con voz natural y una explicación preparada para cada tema. La explicación se escucha al terminar el último artículo marcado de cada tema, aparece escrita en la hoja de lectura y puede escucharse sola con su botón. Escucharlas no usa la cuenta de Claude de nadie. Las explicaciones se prepararon con Claude a partir del texto de la ley; son una guía de estudio y no sustituyen la lectura de los artículos.
+
+Artículo 15.- En las leyes integradas, el selector «O escucha un tema completo» marca de una vez los artículos de un tema. La opción «Voz natural grabada» puede desactivarse en los ajustes para usar la voz del equipo.
+
+TRANSITORIOS
+
+Primero.- Este instructivo es solo un ejemplo. Para escuchar otra ley vigente, descárguela de la fuente oficial y cárguela con el botón «Cargar ley».

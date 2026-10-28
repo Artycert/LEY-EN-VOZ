@@ -1,0 +1,11 @@
+{
+  "appId": "com.artycert.leyenvoz",
+  "appName": "Ley en Voz",
+  "webDir": "www",
+  "android": {
+    "backgroundColor": "#ECF0ED"
+  },
+  "plugins": {
+    "MediaSession": {}
+  }
+}

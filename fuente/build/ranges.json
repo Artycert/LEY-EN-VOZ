@@ -1,0 +1,650 @@
+[
+ {
+  "k": 1,
+  "from": 4,
+  "to": 7,
+  "fromLabel": "Artículo 1º",
+  "toLabel": "Artículo 4º",
+  "n": 4,
+  "ch": 6215
+ },
+ {
+  "k": 2,
+  "from": 10,
+  "to": 19,
+  "fromLabel": "Artículo 5º",
+  "toLabel": "Artículo 13",
+  "n": 9,
+  "ch": 5343
+ },
+ {
+  "k": 3,
+  "from": 22,
+  "to": 36,
+  "fromLabel": "Artículo 14",
+  "toLabel": "Artículo 27",
+  "n": 14,
+  "ch": 7041
+ },
+ {
+  "k": 4,
+  "from": 40,
+  "to": 49,
+  "fromLabel": "Artículo 28",
+  "toLabel": "Artículo 37",
+  "n": 10,
+  "ch": 5027
+ },
+ {
+  "k": 5,
+  "from": 52,
+  "to": 62,
+  "fromLabel": "Artículo 38",
+  "toLabel": "Artículo 48",
+  "n": 11,
+  "ch": 5269
+ },
+ {
+  "k": 6,
+  "from": 64,
+  "to": 75,
+  "fromLabel": "Artículo 49",
+  "toLabel": "Artículo 60",
+  "n": 12,
+  "ch": 9650
+ },
+ {
+  "k": 7,
+  "from": 77,
+  "to": 81,
+  "fromLabel": "Artículo 61",
+  "toLabel": "Artículo 64",
+  "n": 4,
+  "ch": 9547
+ },
+ {
+  "k": 8,
+  "from": 83,
+  "to": 96,
+  "fromLabel": "Artículo 65",
+  "toLabel": "Artículo 78",
+  "n": 14,
+  "ch": 7235
+ },
+ {
+  "k": 9,
+  "from": 98,
+  "to": 105,
+  "fromLabel": "Artículo 79",
+  "toLabel": "Artículo 85",
+  "n": 7,
+  "ch": 7185
+ },
+ {
+  "k": 10,
+  "from": 107,
+  "to": 113,
+  "fromLabel": "Artículo 86",
+  "toLabel": "Artículo 90",
+  "n": 5,
+  "ch": 6872
+ },
+ {
+  "k": 11,
+  "from": 115,
+  "to": 119,
+  "fromLabel": "Artículo 91",
+  "toLabel": "Artículo 94",
+  "n": 4,
+  "ch": 2630
+ },
+ {
+  "k": 12,
+  "from": 122,
+  "to": 127,
+  "fromLabel": "Artículo 95",
+  "toLabel": "Artículo 100",
+  "n": 6,
+  "ch": 9723
+ },
+ {
+  "k": 13,
+  "from": 129,
+  "to": 142,
+  "fromLabel": "Artículo 101",
+  "toLabel": "Artículo 114",
+  "n": 14,
+  "ch": 14103
+ },
+ {
+  "k": 14,
+  "from": 145,
+  "to": 184,
+  "fromLabel": "Artículo 115",
+  "toLabel": "Artículo 152",
+  "n": 38,
+  "ch": 10778
+ },
+ {
+  "k": 15,
+  "from": 186,
+  "to": 191,
+  "fromLabel": "Artículo 153",
+  "toLabel": "Artículo 158",
+  "n": 6,
+  "ch": 1508
+ },
+ {
+  "k": 16,
+  "from": 194,
+  "to": 197,
+  "fromLabel": "Artículo 159",
+  "toLabel": "Artículo 162",
+  "n": 4,
+  "ch": 5226
+ },
+ {
+  "k": 17,
+  "from": 200,
+  "to": 218,
+  "fromLabel": "Artículo 163",
+  "toLabel": "Artículo 177",
+  "n": 15,
+  "ch": 8012
+ },
+ {
+  "k": 18,
+  "from": 220,
+  "to": 240,
+  "fromLabel": "Artículo 178",
+  "toLabel": "Artículo 197",
+  "n": 20,
+  "ch": 12708
+ },
+ {
+  "k": 19,
+  "from": 242,
+  "to": 254,
+  "fromLabel": "Artículo 198",
+  "toLabel": "Artículo 209",
+  "n": 12,
+  "ch": 8184
+ },
+ {
+  "k": 20,
+  "from": 256,
+  "to": 265,
+  "fromLabel": "Artículo 210",
+  "toLabel": "Artículo 218",
+  "n": 9,
+  "ch": 11455
+ },
+ {
+  "k": 21,
+  "from": 267,
+  "to": 283,
+  "fromLabel": "Artículo 219",
+  "toLabel": "Artículo 234",
+  "n": 16,
+  "ch": 7524
+ },
+ {
+  "k": 22,
+  "from": 285,
+  "to": 291,
+  "fromLabel": "Artículo 235",
+  "toLabel": "Artículo 241",
+  "n": 7,
+  "ch": 3935
+ },
+ {
+  "k": 23,
+  "from": 295,
+  "to": 305,
+  "fromLabel": "Artículo 242",
+  "toLabel": "Artículo 252",
+  "n": 11,
+  "ch": 9170
+ },
+ {
+  "k": 24,
+  "from": 308,
+  "to": 332,
+  "fromLabel": "Artículo 253",
+  "toLabel": "Artículo 277",
+  "n": 25,
+  "ch": 14198
+ },
+ {
+  "k": 25,
+  "from": 334,
+  "to": 335,
+  "fromLabel": "Artículo 278",
+  "toLabel": "Artículo 279",
+  "n": 2,
+  "ch": 10993
+ },
+ {
+  "k": 26,
+  "from": 337,
+  "to": 340,
+  "fromLabel": "Artículo 280",
+  "toLabel": "Artículo 280 Quater",
+  "n": 4,
+  "ch": 9553
+ },
+ {
+  "k": 27,
+  "from": 341,
+  "to": 344,
+  "fromLabel": "Artículo 280 Quinquies",
+  "toLabel": "Artículo 282",
+  "n": 4,
+  "ch": 12012
+ },
+ {
+  "k": 28,
+  "from": 345,
+  "to": 346,
+  "fromLabel": "Artículo 283",
+  "toLabel": "Artículo 284",
+  "n": 2,
+  "ch": 2823
+ },
+ {
+  "k": 29,
+  "from": 348,
+  "to": 354,
+  "fromLabel": "Artículo 285",
+  "toLabel": "Artículo 290",
+  "n": 6,
+  "ch": 10881
+ },
+ {
+  "k": 30,
+  "from": 356,
+  "to": 365,
+  "fromLabel": "Artículo 290-1",
+  "toLabel": "Artículo 290-10",
+  "n": 10,
+  "ch": 11964
+ },
+ {
+  "k": 31,
+  "from": 368,
+  "to": 380,
+  "fromLabel": "Artículo 291",
+  "toLabel": "Artículo 303",
+  "n": 13,
+  "ch": 10379
+ },
+ {
+  "k": 32,
+  "from": 382,
+  "to": 398,
+  "fromLabel": "Artículo 304",
+  "toLabel": "Artículo 319",
+  "n": 16,
+  "ch": 11854
+ },
+ {
+  "k": 33,
+  "from": 400,
+  "to": 402,
+  "fromLabel": "Artículo 320",
+  "toLabel": "Artículo 322",
+  "n": 3,
+  "ch": 2896
+ },
+ {
+  "k": 34,
+  "from": 405,
+  "to": 415,
+  "fromLabel": "Artículo 323",
+  "toLabel": "Artículo 332",
+  "n": 10,
+  "ch": 6215
+ },
+ {
+  "k": 35,
+  "from": 418,
+  "to": 428,
+  "fromLabel": "Artículo 333",
+  "toLabel": "Artículo 343",
+  "n": 11,
+  "ch": 4739
+ },
+ {
+  "k": 36,
+  "from": 432,
+  "to": 450,
+  "fromLabel": "Artículo 344",
+  "toLabel": "Artículo 360",
+  "n": 17,
+  "ch": 10949
+ },
+ {
+  "k": 37,
+  "from": 453,
+  "to": 462,
+  "fromLabel": "Artículo 361",
+  "toLabel": "Artículo 370",
+  "n": 10,
+  "ch": 5134
+ },
+ {
+  "k": 38,
+  "from": 464,
+  "to": 477,
+  "fromLabel": "Artículo 371",
+  "toLabel": "Artículo 384",
+  "n": 14,
+  "ch": 8967
+ },
+ {
+  "k": 39,
+  "from": 479,
+  "to": 488,
+  "fromLabel": "Artículo 385",
+  "toLabel": "Artículo 394",
+  "n": 10,
+  "ch": 13458
+ },
+ {
+  "k": 40,
+  "from": 489,
+  "to": 500,
+  "fromLabel": "Artículo 395",
+  "toLabel": "Artículo 406",
+  "n": 12,
+  "ch": 6947
+ },
+ {
+  "k": 41,
+  "from": 502,
+  "to": 518,
+  "fromLabel": "Artículo 407",
+  "toLabel": "Artículo 423",
+  "n": 17,
+  "ch": 10833
+ },
+ {
+  "k": 42,
+  "from": 519,
+  "to": 529,
+  "fromLabel": "Artículo 424",
+  "toLabel": "Artículo 434",
+  "n": 11,
+  "ch": 9743
+ },
+ {
+  "k": 43,
+  "from": 531,
+  "to": 545,
+  "fromLabel": "Artículo 435",
+  "toLabel": "Artículo 449",
+  "n": 15,
+  "ch": 10744
+ },
+ {
+  "k": 44,
+  "from": 547,
+  "to": 560,
+  "fromLabel": "Artículo 450",
+  "toLabel": "Artículo 463",
+  "n": 14,
+  "ch": 10639
+ },
+ {
+  "k": 45,
+  "from": 562,
+  "to": 578,
+  "fromLabel": "Artículo 464",
+  "toLabel": "Artículo 480",
+  "n": 17,
+  "ch": 11359
+ },
+ {
+  "k": 46,
+  "from": 581,
+  "to": 589,
+  "fromLabel": "Artículo 481",
+  "toLabel": "Artículo 489",
+  "n": 9,
+  "ch": 6791
+ },
+ {
+  "k": 47,
+  "from": 591,
+  "to": 612,
+  "fromLabel": "Artículo 490",
+  "toLabel": "Artículo 511",
+  "n": 22,
+  "ch": 11885
+ },
+ {
+  "k": 48,
+  "from": 614,
+  "to": 629,
+  "fromLabel": "Artículo 512",
+  "toLabel": "Artículo 527",
+  "n": 16,
+  "ch": 9235
+ },
+ {
+  "k": 49,
+  "from": 631,
+  "to": 647,
+  "fromLabel": "Artículo 528",
+  "toLabel": "Artículo 541",
+  "n": 14,
+  "ch": 7407
+ },
+ {
+  "k": 50,
+  "from": 650,
+  "to": 658,
+  "fromLabel": "Artículo 542",
+  "toLabel": "Artículo 549",
+  "n": 8,
+  "ch": 4501
+ },
+ {
+  "k": 51,
+  "from": 660,
+  "to": 673,
+  "fromLabel": "Artículo 550",
+  "toLabel": "Artículo 563",
+  "n": 14,
+  "ch": 15420
+ },
+ {
+  "k": 52,
+  "from": 675,
+  "to": 692,
+  "fromLabel": "Artículo 564",
+  "toLabel": "Artículo 581",
+  "n": 18,
+  "ch": 12631
+ },
+ {
+  "k": 53,
+  "from": 696,
+  "to": 701,
+  "fromLabel": "Artículo 582",
+  "toLabel": "Artículo 587",
+  "n": 6,
+  "ch": 8255
+ },
+ {
+  "k": 54,
+  "from": 702,
+  "to": 708,
+  "fromLabel": "Artículo 588",
+  "toLabel": "Artículo 594",
+  "n": 7,
+  "ch": 11998
+ },
+ {
+  "k": 55,
+  "from": 709,
+  "to": 713,
+  "fromLabel": "Artículo 595",
+  "toLabel": "Artículo 599",
+  "n": 5,
+  "ch": 2721
+ },
+ {
+  "k": 56,
+  "from": 715,
+  "to": 726,
+  "fromLabel": "Artículo 600",
+  "toLabel": "Artículo 609",
+  "n": 11,
+  "ch": 5189
+ },
+ {
+  "k": 57,
+  "from": 728,
+  "to": 741,
+  "fromLabel": "Artículo 610",
+  "toLabel": "Artículo 620",
+  "n": 14,
+  "ch": 10797
+ },
+ {
+  "k": 58,
+  "from": 745,
+  "to": 754,
+  "fromLabel": "Artículo 621",
+  "toLabel": "Artículo 630",
+  "n": 10,
+  "ch": 6038
+ },
+ {
+  "k": 59,
+  "from": 758,
+  "to": 763,
+  "fromLabel": "Artículo 631",
+  "toLabel": "Artículo 635",
+  "n": 5,
+  "ch": 2961
+ },
+ {
+  "k": 60,
+  "from": 766,
+  "to": 781,
+  "fromLabel": "Artículo 636",
+  "toLabel": "Artículo 647",
+  "n": 13,
+  "ch": 6814
+ },
+ {
+  "k": 61,
+  "from": 783,
+  "to": 802,
+  "fromLabel": "Artículo 648",
+  "toLabel": "Artículo 665",
+  "n": 18,
+  "ch": 8711
+ },
+ {
+  "k": 62,
+  "from": 804,
+  "to": 818,
+  "fromLabel": "Artículo 666",
+  "toLabel": "Artículo 679",
+  "n": 14,
+  "ch": 11174
+ },
+ {
+  "k": 63,
+  "from": 820,
+  "to": 838,
+  "fromLabel": "Artículo 680",
+  "toLabel": "Artículo 697",
+  "n": 18,
+  "ch": 8526
+ },
+ {
+  "k": 64,
+  "from": 840,
+  "to": 845,
+  "fromLabel": "Artículo 698",
+  "toLabel": "Artículo 702",
+  "n": 5,
+  "ch": 1847
+ },
+ {
+  "k": 65,
+  "from": 848,
+  "to": 860,
+  "fromLabel": "Artículo 703",
+  "toLabel": "Artículo 714",
+  "n": 12,
+  "ch": 6499
+ },
+ {
+  "k": 66,
+  "from": 862,
+  "to": 871,
+  "fromLabel": "Artículo 715",
+  "toLabel": "Artículo 724",
+  "n": 10,
+  "ch": 5167
+ },
+ {
+  "k": 67,
+  "from": 873,
+  "to": 889,
+  "fromLabel": "Artículo 725",
+  "toLabel": "Artículo 741",
+  "n": 17,
+  "ch": 10078
+ },
+ {
+  "k": 68,
+  "from": 892,
+  "to": 905,
+  "fromLabel": "Artículo 742",
+  "toLabel": "Artículo 753",
+  "n": 12,
+  "ch": 6797
+ },
+ {
+  "k": 69,
+  "from": 907,
+  "to": 907,
+  "fromLabel": "Artículo 754",
+  "toLabel": "Artículo 754",
+  "n": 1,
+  "ch": 1732
+ },
+ {
+  "k": 70,
+  "from": 911,
+  "to": 915,
+  "fromLabel": "Artículo 755",
+  "toLabel": "Artículo 759",
+  "n": 5,
+  "ch": 6690
+ },
+ {
+  "k": 71,
+  "from": 919,
+  "to": 934,
+  "fromLabel": "Artículo 760",
+  "toLabel": "Artículo 774",
+  "n": 15,
+  "ch": 166
+ },
+ {
+  "k": 72,
+  "from": 936,
+  "to": 947,
+  "fromLabel": "Primero",
+  "toLabel": "Décimo Segundo",
+  "n": 12,
+  "ch": 6236
+ }
+]

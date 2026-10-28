@@ -1,0 +1,27 @@
+TÍTULO PRIMERO
+
+De la app
+
+CAPÍTULO ÚNICO
+
+Del uso
+
+Artículo 1o.- Esta app reproduce leyes grabadas con voz natural, completas o por temas, con una explicación al final de cada tema.
+
+Artículo 2o.- Las leyes disponibles se eligen con el botón que muestra el nombre de la ley, en la parte de arriba. Las leyes nuevas aparecen en esa lista cuando se publican, sin reinstalar la app.
+
+Artículo 3o.- Para escuchar una ley sin internet, en la lista de leyes se oprime «Descargar para escuchar sin internet». Si la descarga se interrumpe, se continúa donde se quedó. Sin descargar, el audio se escucha por internet y gasta alrededor de 15 MB por hora.
+
+Artículo 4o.- En el índice se marcan los títulos, capítulos o artículos que se quieren escuchar. El selector «O escucha un tema completo» marca un tema de una vez e indica cuántos minutos dura.
+
+Artículo 5o.- La lectura sigue con la pantalla apagada y se controla desde la notificación, la pantalla de bloqueo o los audífonos.
+
+Artículo 6o.- En los ajustes de lectura se elige qué hacer al terminar un artículo: seguir, pausar o repetirlo. La velocidad va de 0.75 a 2 veces y el temporizador detiene la lectura después del tiempo elegido.
+
+Artículo 7o.- La app recuerda en qué artículo se quedó cada ley.
+
+Artículo 8o.- Las explicaciones de cada tema se prepararon con Claude a partir del texto de la ley. Son una guía de estudio y no sustituyen la lectura de los artículos.
+
+TRANSITORIOS
+
+Primero.- Las leyes de esta app provienen de las fuentes que se indican al inicio de cada una. Antes de citarlas, verifique que el texto siga vigente.
